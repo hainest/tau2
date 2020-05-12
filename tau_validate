@@ -6,7 +6,6 @@ import popen2
 import string
 import glob
 import signal
-import os
 
 uniqID = 1
 

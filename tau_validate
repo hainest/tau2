@@ -19,8 +19,8 @@ class TimeoutError(Exception):
 
 
 def outputHeader(message):
-    if verbose == True:
-        if html == True:
+    if verbose:
+        if html:
             print(
                 "</pre><h2><font color=blue>\n" +
                 message +
@@ -30,8 +30,8 @@ def outputHeader(message):
 
 
 def output(message):
-    if verbose == True:
-        if html == True:
+    if verbose:
+        if html:
             print(
                 "</pre><h3><font color=green>\n" +
                 message +
@@ -41,7 +41,7 @@ def output(message):
 
 
 def begin():
-    if html == True:
+    if html:
         print("<html><body><pre>\n")
     else:
         print("------------------------------------------------------")
@@ -81,8 +81,8 @@ def raise_timeout(signum, frame):
 def system(command, timeout_sec=None):
     if timeout_sec is None:
         # use the old method, the new one below sometimes hangs forever
-        if verbose == True:
-            if html == True:
+        if verbose:
+            if html:
                 print("<b>" + os.getcwd() + "> " + command + "</b>")
             else:
                 print(os.getcwd() + "> " + command)
@@ -99,8 +99,8 @@ def system(command, timeout_sec=None):
             retval = child.wait()
             return retval
 
-    if verbose == True:
-        if html == True:
+    if verbose:
+        if html:
             print("<b>" + os.getcwd() + "> " + command + "</b>")
         else:
             print(os.getcwd() + "> " + command)
@@ -115,7 +115,7 @@ def system(command, timeout_sec=None):
     retval = -1
     data = ""
     while (retval == -1):
-        if verbose == True:
+        if verbose:
             for line in data:
                 print(line)
         try:
@@ -127,15 +127,15 @@ def system(command, timeout_sec=None):
             break
         retval = child.poll()
     data = child.fromchild.readlines()
-    if verbose == True:
+    if verbose:
         for line in data:
             print(line)
     return retval
 
 
 def chdir(directory):
-    if verbose == True:
-        if html == True:
+    if verbose:
+        if html:
             print("<b>" + os.getcwd() + "> cd " + directory + "</b>")
         else:
             print(os.getcwd() + "> cd " + directory)
@@ -159,7 +159,7 @@ def unsetEnviron(variable):
 
 
 def openTable(tests):
-    if html == True:
+    if html:
         print("<table border=1>")
         print("<tr><td rowspan=2>Stub Makefile</td>")
         for test in tests:
@@ -174,13 +174,13 @@ def openTable(tests):
 
 
 def closeTable():
-    if html == True:
+    if html:
         print("</tr>")
         print("</table>")
 
 
 def outputSingle(tests, makefile):
-    if verbose == True and html == False:
+    if verbose and html == False:
         for test in tests:
             print(
                 "%4s : %40s : %s %s" %
@@ -190,7 +190,7 @@ def outputSingle(tests, makefile):
                  test.message))
         return
 
-    if html == True:
+    if html:
         print("<tr><td>" + makefile + "</td>")
         for test in tests:
             if test.buildresult == "pass":
@@ -255,22 +255,22 @@ class Test:
         self.error("Base class buildTest called")
 
     def checkResults(self):
-        if os.path.exists("profile.0.0.0") == True:
+        if os.path.exists("profile.0.0.0"):
             retval = system("pprof")
             self.runresult = "pass"
         elif os.path.exists("tautrace.0.0.0.trc"):
             self.runresult = "pass"
         elif os.path.exists("MULTI__GET_TIME_OF_DAY/profile.0.0.0"):
             self.runresult = "pass"
-        elif usesOption(self.makefile, "epilog") == True:
+        elif usesOption(self.makefile, "epilog"):
             self.runresult = "pass"
-        elif usesOption(self.makefile, "vampirtrace") == True:
-            if os.path.exists("simple.otf") == True:
+        elif usesOption(self.makefile, "vampirtrace"):
+            if os.path.exists("simple.otf"):
                 self.runresult = "pass"
             else:
                 self.error("Error: run succeeded, but no trace found")
                 self.runresult = "fail"
-        elif usesOption(self.makefile, "scorep") == True:
+        elif usesOption(self.makefile, "scorep"):
             self.runresult = "pass"
         else:
             self.error("Error: run succeeded, but no profiles found")
@@ -280,8 +280,8 @@ class Test:
         global errorsFound
         global uniqID
         errorsFound = errorsFound + 1
-        if verbose == True:
-            if html == True:
+        if verbose:
+            if html:
                 print(("</pre><h1><font color=red><a name=%d>\n" +
                        message + "\n</a></font></h1><pre>") % (uniqID))
                 self.errorID = uniqID
@@ -386,11 +386,11 @@ class CTest(SimpleTest):
         return "c"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "scorep") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "scorep"):
             return False
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "epilog") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "epilog"):
             return False
         return True
 
@@ -403,11 +403,11 @@ class CompInstCTest(SimpleTest):
         return "compc"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "scorep") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "scorep"):
             return False
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "epilog") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "epilog"):
             return False
         if system("grep \"^TAU_COMPINST_OPTION\" " + self.fullmakefile) != 0:
             return False
@@ -422,11 +422,11 @@ class CompInstCPPTest(SimpleTest):
         return "compcpp"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "scorep") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "scorep"):
             return False
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "epilog") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "epilog"):
             return False
         if system("grep \"^TAU_COMPINST_OPTION\" " + self.fullmakefile) != 0:
             return False
@@ -441,15 +441,15 @@ class CompInstF90Test(SimpleTest):
         return "compf"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "scorep") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "scorep"):
             return False
-        if usesOption(self.makefile, "upc") == True:
+        if usesOption(self.makefile, "upc"):
             return False
         if system("grep \"^TAU_F90 \" " + self.fullmakefile) != 0:
             return False
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "epilog") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "epilog"):
             return False
         if system("grep \"^TAU_COMPINST_OPTION\" " + self.fullmakefile) != 0:
             return False
@@ -464,15 +464,15 @@ class FflinkTest(SimpleTest):
         return "fflink"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "scorep") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "scorep"):
             return False
-        if usesOption(self.makefile, "upc") == True:
+        if usesOption(self.makefile, "upc"):
             return False
         if system("grep \"^TAU_F90 \" " + self.fullmakefile) != 0:
             return False
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "epilog") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "epilog"):
             return False
         return True
 
@@ -485,15 +485,15 @@ class FcpplinkTest(SimpleTest):
         return "fcpplink"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "scorep") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "scorep"):
             return False
-        if usesOption(self.makefile, "upc") == True:
+        if usesOption(self.makefile, "upc"):
             return False
         if system("grep \"^TAU_F90 \" " + self.fullmakefile) != 0:
             return False
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "epilog") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "epilog"):
             return False
         return True
 
@@ -506,15 +506,15 @@ class FclinkTest(SimpleTest):
         return "fclink"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "scorep") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "scorep"):
             return False
-        if usesOption(self.makefile, "upc") == True:
+        if usesOption(self.makefile, "upc"):
             return False
         if system("grep \"^TAU_F90 \" " + self.fullmakefile) != 0:
             return False
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "epilog") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "epilog"):
             return False
         return True
 
@@ -544,7 +544,7 @@ class MpiFTest(SimpleTest):
         return "mpif"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "upc") == True:
+        if usesOption(self.makefile, "upc"):
             return False
         if usesOption(self.makefile, "mpi") == False:
             output("Skipping, not configured with MPI")
@@ -684,11 +684,11 @@ class PdtTestC(PdtTest):
         return "pdtc"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "scorep") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "scorep"):
             return False
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "epilog") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "epilog"):
             return False
         return True
 
@@ -707,11 +707,11 @@ class PdtTestCPP(PdtTest):
         return "pdtcpp"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "scorep") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "scorep"):
             return False
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "epilog") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "epilog"):
             return False
         return True
 
@@ -724,13 +724,13 @@ class PdtTestF(PdtTest):
         return "pdtf"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "scorep") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "scorep"):
             return False
-        if usesOption(self.makefile, "upc") == True:
+        if usesOption(self.makefile, "upc"):
             return False
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "epilog") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "epilog"):
             return False
         if system("grep \"^TAU_F90 \" " + self.fullmakefile) != 0:
             return False
@@ -745,13 +745,13 @@ class PdtTestGF(PdtTest):
         return "pdtgf"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "scorep") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "scorep"):
             return False
-        if usesOption(self.makefile, "upc") == True:
+        if usesOption(self.makefile, "upc"):
             return False
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "epilog") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "epilog"):
             return False
         if system("grep \"^TAU_F90 \" " + self.fullmakefile) != 0:
             return False
@@ -766,8 +766,8 @@ class PdtMPITestC(PdtTest):
         return "pdtmpic"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "epilog") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "epilog"):
             return False
         if usesOption(self.makefile, "mpi") == False:
             output("Skipping, not configured with MPI")
@@ -786,8 +786,8 @@ class PdtMPITestCPP(PdtTest):
         return "pdtmpicpp"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "epilog") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "epilog"):
             return False
         if usesOption(self.makefile, "mpi") == False:
             output("Skipping, not configured with MPI")
@@ -806,10 +806,10 @@ class PdtMPITestF(PdtTest):
         return "pdtmpif"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "upc") == True:
+        if usesOption(self.makefile, "upc"):
             return False
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "epilog") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "epilog"):
             return False
         if usesOption(self.makefile, "mpi") == False:
             output("Skipping, not configured with MPI")
@@ -830,10 +830,10 @@ class PdtMPITestGF(PdtTest):
         return "pdtmpigf"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "upc") == True:
+        if usesOption(self.makefile, "upc"):
             return False
-        if usesOption(self.makefile, "mpi") == True and usesOption(
-                self.makefile, "epilog") == True:
+        if usesOption(self.makefile, "mpi") and usesOption(
+                self.makefile, "epilog"):
             return False
         if usesOption(self.makefile, "mpi") == False:
             output("Skipping, not configured with MPI")
@@ -935,10 +935,10 @@ table_filename = None
 tag = ""
 timeout_sec = None
 for arg in args:
-    if nextArgTag == True:
+    if nextArgTag:
         tag = arg
         nextArgTag = False
-    elif nextArgTimeout == True:
+    elif nextArgTimeout:
         try:
             timeout_sec = int(arg)
         except ValueError:
@@ -946,7 +946,7 @@ for arg in args:
             print("you provided: ", arg)
             usage()
         nextArgTimeout = False
-    elif nextArgTable == True:
+    elif nextArgTable:
         table_filename = arg
         nextArgTable = False
     elif arg == "-v":
@@ -1078,13 +1078,13 @@ for makefile in makefiles:
 
     testgrid[makefile] = tests
 
-    if verbose == True:
-        if html == True:
+    if verbose:
+        if html:
             print("<hr>")
         else:
             print("----------------")
 
-    if separateTable == True:
+    if separateTable:
         if first == 1:
             first = 0
             saveout = sys.stdout
@@ -1101,7 +1101,7 @@ for makefile in makefiles:
 if found == 0:
     print("Couldn't find any makefiles in " + target)
 
-if separateTable == True:
+if separateTable:
     sys.stdout = fsock
     closeTable()
     print("</body><html>")

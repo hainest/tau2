@@ -355,8 +355,6 @@ class SimpleTest(Test):
         if parallel_runner == "":
             output(
                 "Warning: Using default mpi launch: \"mpirun -np 2\". Set TAU_VALIDATE_PARALLEL to change")
-            #output ("Skipping Test (TAU_VALIDATE_PARALLEL is not set, can't run MPI)")
-            # return
         if not self.checkApplicable():
             return
 
@@ -1044,7 +1042,6 @@ first = 1
 
 for makefile in makefiles:
     found = 1
-#    print makefile
 
     tests = []
     if directory:

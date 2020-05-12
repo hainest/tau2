@@ -25,27 +25,27 @@ if string.atof( ( string.split( sys.version )[0] ) [0:3]) < 2.3:
 def outputHeader(message):
     if verbose == True:
         if html == True:
-            print "</pre><h2><font color=blue>\n" + message + "\n</font></h2><pre>";
+            print("</pre><h2><font color=blue>\n" + message + "\n</font></h2><pre>");
         else:
-            print message + "\n";
+            print(message + "\n");
 
         
 
 def output(message):
     if verbose == True:
         if html == True:
-            print "</pre><h3><font color=green>\n" + message + "\n</font></h3><pre>";
+            print("</pre><h3><font color=green>\n" + message + "\n</font></h3><pre>");
         else:
-            print message + "\n";
+            print(message + "\n");
 
 
 def begin():
     if html == True:
-        print "<html><body><pre>\n"
+        print("<html><body><pre>\n")
     else:
-        print "------------------------------------------------------"
-        print "build/run : %-20s : %s" % ("test name", "stub makefile")
-        print "------------------------------------------------------"
+        print("------------------------------------------------------")
+        print("build/run : %-20s : %s" % ("test name", "stub makefile"))
+        print("------------------------------------------------------")
         
 
 
@@ -56,10 +56,10 @@ def end():
         code = 0
         cleanup()
     else:
-        print "Encountered %d errors" % errorsFound
+        print("Encountered %d errors" % errorsFound)
         code = errorsFound
     if (html):
-        print "</pre><body></html>\n"
+        print("</pre><body></html>\n")
     sys.exit(code)
 
 
@@ -82,14 +82,14 @@ def system(command, timeout_sec=None):
         # use the old method, the new one below sometimes hangs forever
         if verbose == True:
             if html == True:
-                print "<b>" + os.getcwd() + "> " + command + "</b>"
+                print("<b>" + os.getcwd() + "> " + command + "</b>")
             else:
-                print os.getcwd() + "> " + command
+                print(os.getcwd() + "> " + command)
             sys.stdout.flush()
             child = popen2.Popen4(command)
             data = child.fromchild.readlines()
             for line in data:
-                print line
+                print(line)
             retval = child.wait()
             return retval
         else:
@@ -101,9 +101,9 @@ def system(command, timeout_sec=None):
 
     if verbose == True:
         if html == True:
-            print "<b>" + os.getcwd() + "> " + command + "</b>"
+            print("<b>" + os.getcwd() + "> " + command + "</b>")
         else:
-            print os.getcwd() + "> " + command
+            print(os.getcwd() + "> " + command)
         sys.stdout.flush()
 
     if timeout_sec is not None:
@@ -117,7 +117,7 @@ def system(command, timeout_sec=None):
     while (retval == -1):
         if verbose == True:
             for line in data:
-                print line
+                print(line)
         try:
             if timeout_sec is not None:
                 signal.alarm(timeout_sec)
@@ -129,82 +129,82 @@ def system(command, timeout_sec=None):
     data = child.fromchild.readlines()
     if verbose == True:
        for line in data:
-          print line
+          print(line)
     return retval
 
 
 def chdir(directory):
     if verbose == True:
         if html == True:
-            print "<b>" + os.getcwd() + "> cd " + directory + "</b>"
+            print("<b>" + os.getcwd() + "> cd " + directory + "</b>")
         else:
-            print os.getcwd() + "> cd " + directory
+            print(os.getcwd() + "> cd " + directory)
     if os.path.exists(directory) and os.path.isdir(directory):
         os.chdir(directory)
 
 def prependPath(directory):
-    print "<b>" + os.getcwd() + "> PATH=" + directory + ":$PATH</b>"
+    print("<b>" + os.getcwd() + "> PATH=" + directory + ":$PATH</b>")
     os.environ['PATH'] = directory + os.pathsep + os.environ['PATH']
 
 def setEnviron(variable,value):
-    print "<b>" + os.getcwd() + "> export " + variable + "=" + value + "</b>"
+    print("<b>" + os.getcwd() + "> export " + variable + "=" + value + "</b>")
     os.environ[variable] = value
 
 def unsetEnviron(variable):
-    print "<b>" + os.getcwd() + "> unset " + variable + "</b>"
+    print("<b>" + os.getcwd() + "> unset " + variable + "</b>")
     del os.environ[variable]
     
 def openTable(tests):
     if html == True:
-        print "<table border=1>"
-        print "<tr><td rowspan=2>Stub Makefile</td>"
+        print("<table border=1>")
+        print("<tr><td rowspan=2>Stub Makefile</td>")
         for test in tests:
-            print "<td colspan=2>"+test.name+"</td>"
-        print "</tr>"
+            print("<td colspan=2>"+test.name+"</td>")
+        print("</tr>")
     
-        print "<tr>"
+        print("<tr>")
         for test in tests:
-            print "<td colspan>build</td>"
-            print "<td colspan>run</td>"
-        print "</tr>"
+            print("<td colspan>build</td>")
+            print("<td colspan>run</td>")
+        print("</tr>")
     
 def closeTable():
     if html == True:
-        print "</tr>"
-        print "</table>"
+        print("</tr>")
+        print("</table>")
 
 
 def outputSingle(tests, makefile):
     if verbose == True and html == False:
         for test in tests:
-            print "%4s : %40s : %s %s" % (test.buildresult, test.name, makefile, test.message)
+            print("%4s : %40s : %s %s" % (test.buildresult, test.name, makefile, test.message))
         return
 
     if html == True:
-        print "<tr><td>"+makefile+"</td>"
+        print("<tr><td>"+makefile+"</td>")
         for test in tests:
             if test.buildresult == "pass":
-                print "<td bgcolor=#64FF64>pass</td>"
+                print("<td bgcolor=#64FF64>pass</td>")
             elif test.buildresult == "fail":
-                print "<td bgcolor=#FF6464><a href=#%d>fail</a></td>" % (test.errorID)
+                print("<td bgcolor=#FF6464><a href=#%d>fail</a></td>" % (test.errorID))
             elif test.buildresult == "timeout":
-                print "<td bgcolor=#FF6464><a href=#%d>timeout</a></td>" % (test.errorID)
+                print("<td bgcolor=#FF6464><a href=#%d>timeout</a></td>" % (test.errorID))
             else:
-                print "<td bgcolor=#CCCCCC>N/A</td>"
+                print("<td bgcolor=#CCCCCC>N/A</td>")
 
             if test.runresult == "pass":
-                print "<td bgcolor=#64FF64>pass</td>"
+                print("<td bgcolor=#64FF64>pass</td>")
             elif test.runresult == "fail":
-                print "<td bgcolor=#FF6464><a href=#%d>fail</a></td>" % (test.errorID)
+                print("<td bgcolor=#FF6464><a href=#%d>fail</a></td>" % (test.errorID))
             elif test.runresult == "timeout":
-                print "<td bgcolor=#FF6464><a href=#%d>timeout</a></td>" % (test.errorID)
+                print("<td bgcolor=#FF6464><a href=#%d>timeout</a></td>" % (test.errorID))
             else:
-                print "<td bgcolor=#CCCCCC>N/A</td>"
+                print("<td bgcolor=#CCCCCC>N/A</td>")
                 
 
 def outputSummary(testgrid):
     first = 1
-    for makefile in testgrid.keys():
+    for makefile in list(testgrid.keys()):
         tests = testgrid[makefile]
 
         if first == 1:
@@ -263,11 +263,11 @@ class Test:
         errorsFound = errorsFound + 1
         if verbose == True:
             if html == True:
-                print ("</pre><h1><font color=red><a name=%d>\n" + message + "\n</a></font></h1><pre>") % (uniqID);
+                print(("</pre><h1><font color=red><a name=%d>\n" + message + "\n</a></font></h1><pre>") % (uniqID));
                 self.errorID = uniqID
                 uniqID = uniqID + 1
             else:
-                print message + "\n";
+                print(message + "\n");
 
 class SimpleTest(Test):
     def __init__(self, name, makefile):
@@ -719,50 +719,50 @@ class PdtMPITestGF(PdtTest):
 
 
 def usage():
-    print ""
-    print "Usage: tau_validate [-v] [--html] [--tag <tag>] [--timeout <timeout>]"
-    print "                    [--table <file>] [--build] [--run] <target>"
-    print ""
-    print "Options:"
-    print ""
-    print "-v                   Verbose output"
-    print "--html               Output results in HTML"
-    print "--tag <tag>          Validate only the subset of TAU stub makefiles matching <tag>"
-    print "--timeout <timeout>  Give up if a test does not succeed after timeout "
-    print "                     seconds of runtime"
-    print "--table <file>       Real-time creation of an addition <file> containing "
-    print "                     the summary table of the tests"
-    print "--build              Only build"
-    print "--run                Only run"
-    print "<target>             Specify an arch directory (e.g. rs6000), or the lib"
-    print "                     directory (rs6000/lib), or a specific makefile."
-    print "                     Relative or absolute paths are ok."
-    print ""
-    print "Notes:"
-    print "tau_validate will attempt to validate a TAU installation by performing"
-    print "various tests on each TAU stub Makefile.  Some degree of logic exists"
-    print "to determine if a given test applies to a given makefile, but it's not"
-    print "perfect."
-    print ""
-    print "Example:"
-    print ""
-    print "bash : ./tau_validate --html --table table.html --timeout 180 x86_64 &> results.html"
-    print "tcsh : ./tau_validate --html --table table.html --timeout 180 x86_64 >& results.html"
-    print ""
-    print "Optional run scripts:"
-    print "Using the environment variables TAU_VALIDATE_SERIAL and TAU_VALIDATE_PARALLEL"
-    print "you can do custom execution of jobs.  A sample parallel runner (app will "
-    print "always be called 'simple'). The following is an example script parallel.sh"
-    print "(make sure it has execute permissions before running tau_validate):"
-    print ""
-    print "#!/bin/bash"
-    print "mpirun -np 2 ./simple"
-    print ""
-    print "With parallel runner:"
-    print ""
-    print "(using bash)"
-    print "export TAU_VALIDATE_PARALLEL=`pwd`/parallel.sh; ./tau_validate -v --html x86_64 &> results.html"
-    print ""
+    print("")
+    print("Usage: tau_validate [-v] [--html] [--tag <tag>] [--timeout <timeout>]")
+    print("                    [--table <file>] [--build] [--run] <target>")
+    print("")
+    print("Options:")
+    print("")
+    print("-v                   Verbose output")
+    print("--html               Output results in HTML")
+    print("--tag <tag>          Validate only the subset of TAU stub makefiles matching <tag>")
+    print("--timeout <timeout>  Give up if a test does not succeed after timeout ")
+    print("                     seconds of runtime")
+    print("--table <file>       Real-time creation of an addition <file> containing ")
+    print("                     the summary table of the tests")
+    print("--build              Only build")
+    print("--run                Only run")
+    print("<target>             Specify an arch directory (e.g. rs6000), or the lib")
+    print("                     directory (rs6000/lib), or a specific makefile.")
+    print("                     Relative or absolute paths are ok.")
+    print("")
+    print("Notes:")
+    print("tau_validate will attempt to validate a TAU installation by performing")
+    print("various tests on each TAU stub Makefile.  Some degree of logic exists")
+    print("to determine if a given test applies to a given makefile, but it's not")
+    print("perfect.")
+    print("")
+    print("Example:")
+    print("")
+    print("bash : ./tau_validate --html --table table.html --timeout 180 x86_64 &> results.html")
+    print("tcsh : ./tau_validate --html --table table.html --timeout 180 x86_64 >& results.html")
+    print("")
+    print("Optional run scripts:")
+    print("Using the environment variables TAU_VALIDATE_SERIAL and TAU_VALIDATE_PARALLEL")
+    print("you can do custom execution of jobs.  A sample parallel runner (app will ")
+    print("always be called 'simple'). The following is an example script parallel.sh")
+    print("(make sure it has execute permissions before running tau_validate):")
+    print("")
+    print("#!/bin/bash")
+    print("mpirun -np 2 ./simple")
+    print("")
+    print("With parallel runner:")
+    print("")
+    print("(using bash)")
+    print("export TAU_VALIDATE_PARALLEL=`pwd`/parallel.sh; ./tau_validate -v --html x86_64 &> results.html")
+    print("")
     
     sys.exit(-1)
 
@@ -815,8 +815,8 @@ for arg in args:
         try:
             timeout_sec = int(arg)
         except ValueError:
-            print "timeout must be an integer number of seconds"
-            print "you provided: ", arg
+            print("timeout must be an integer number of seconds")
+            print("you provided: ", arg)
             usage()
         nextArgTimeout = False
     elif nextArgTable == True:
@@ -849,7 +849,7 @@ for arg in args:
 signal.signal(signal.SIGALRM, raise_timeout)
 
 if optClean:
-    print "Cleaning..."
+    print("Cleaning...")
     verbose = True
     cleanup()
     sys.exit(0)
@@ -868,10 +868,10 @@ target = os.path.realpath(target)
 
 
 
-if os.environ.has_key('TAU_VALIDATE_SERIAL'):
+if 'TAU_VALIDATE_SERIAL' in os.environ:
    serial_runner=os.environ['TAU_VALIDATE_SERIAL']
 
-if os.environ.has_key('TAU_VALIDATE_PARALLEL'):
+if 'TAU_VALIDATE_PARALLEL' in os.environ:
    parallel_runner=os.environ['TAU_VALIDATE_PARALLEL']
 
 begin()
@@ -883,12 +883,12 @@ def runTest(test,tests):
     if optRun:
         test.runTest(timeout_sec)
     tests.append(test)
-    print "%4s/%-4s : %-20s : %s %s" % (test.buildresult, test.runresult, test.name, makefile, test.message)
+    print("%4s/%-4s : %-20s : %s %s" % (test.buildresult, test.runresult, test.name, makefile, test.message))
     
 
 
 if not os.path.exists(target):
-    print "Couldn't find: " + target
+    print("Couldn't find: " + target)
     usage()
 
 directory = False
@@ -952,9 +952,9 @@ for makefile in makefiles:
     
     if verbose == True:
         if html == True:
-            print "<hr>"
+            print("<hr>")
         else:
-            print "----------------"
+            print("----------------")
     
     if separateTable == True:
         if first == 1:
@@ -962,7 +962,7 @@ for makefile in makefiles:
             saveout = sys.stdout
             fsock = open(PWD + "/" + table_filename, 'w')
             sys.stdout = fsock
-            print "<html><body>"
+            print("<html><body>")
             openTable(tests)
             
         sys.stdout = fsock    
@@ -971,12 +971,12 @@ for makefile in makefiles:
         sys.stdout = saveout
 
 if found == 0:
-    print "Couldn't find any makefiles in " + target
+    print("Couldn't find any makefiles in " + target)
 
 if separateTable == True:
     sys.stdout = fsock
     closeTable()
-    print "</body><html>"
+    print("</body><html>")
     sys.stdout = saveout
     fsock.close()
 

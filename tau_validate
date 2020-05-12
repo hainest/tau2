@@ -180,7 +180,7 @@ def closeTable():
 
 
 def outputSingle(tests, makefile):
-    if verbose and html == False:
+    if verbose and not html:
         for test in tests:
             print(
                 "%4s : %40s : %s %s" %
@@ -304,7 +304,7 @@ class SimpleTest(Test):
             "), build (" +
             self.fullmakefile +
             ")")
-        if self.checkApplicable() == False:
+        if not self.checkApplicable():
             return
         chdir(TEST_ROOT + "/" + self.getActualTest())
         system("rm -rf " + self.buildpath)
@@ -320,7 +320,7 @@ class SimpleTest(Test):
             " TAU_TEST_MAKEFILE=" +
             self.fullmakefile +
             " make")
-        if retval != 0 or os.path.exists("simple") == False:
+        if retval != 0 or not os.path.exists("simple"):
             self.error("Error: failed to build")
             self.buildresult = "fail"
             return
@@ -331,11 +331,11 @@ class SimpleTest(Test):
     def runTest(self, timeout):
         outputHeader("SimpleTest(" + self.getActualTest() +
                      ", run (" + self.fullmakefile + ")")
-        if self.checkApplicable() == False:
+        if not self.checkApplicable():
             return
 
         chdir(TEST_ROOT + "/" + self.getActualTest())
-        if os.path.exists(self.buildpath) == False:
+        if not os.path.exists(self.buildpath):
             output("Nothing to run")
             return
         chdir(self.buildpath)
@@ -358,11 +358,11 @@ class SimpleTest(Test):
                 "Warning: Using default mpi launch: \"mpirun -np 2\". Set TAU_VALIDATE_PARALLEL to change")
             #output ("Skipping Test (TAU_VALIDATE_PARALLEL is not set, can't run MPI)")
             # return
-        if self.checkApplicable() == False:
+        if not self.checkApplicable():
             return
 
         chdir(TEST_ROOT + "/" + self.getActualTest())
-        if os.path.exists(self.buildpath) == False:
+        if not os.path.exists(self.buildpath):
             output("Nothing to run")
             return
         chdir(self.buildpath)
@@ -527,7 +527,7 @@ class MpiCTest(SimpleTest):
         return "mpic"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") == False:
+        if not usesOption(self.makefile, "mpi"):
             output("Skipping, not configured with MPI")
             return False
         return True
@@ -546,7 +546,7 @@ class MpiFTest(SimpleTest):
     def checkApplicable(self):
         if usesOption(self.makefile, "upc"):
             return False
-        if usesOption(self.makefile, "mpi") == False:
+        if not usesOption(self.makefile, "mpi"):
             output("Skipping, not configured with MPI")
             return False
         if system("grep \"^TAU_F90 \" " + self.fullmakefile) != 0:
@@ -572,11 +572,11 @@ class PdtTest(Test):
             self.fullmakefile +
             ")")
 
-        if usesOption(self.makefile, "pdt") == False:
+        if not usesOption(self.makefile, "pdt"):
             output("Skipping, not configured with PDT")
             return
 
-        if self.checkApplicable() == False:
+        if not self.checkApplicable():
             return
 
         chdir(TEST_ROOT + "/" + self.getActualTest())
@@ -617,15 +617,15 @@ class PdtTest(Test):
             self.fullmakefile +
             ")")
 
-        if usesOption(self.makefile, "pdt") == False:
+        if not usesOption(self.makefile, "pdt"):
             output("Skipping, not configured with PDT")
             return
 
-        if self.checkApplicable() == False:
+        if not self.checkApplicable():
             return
 
         chdir(TEST_ROOT + "/" + self.getActualTest())
-        if os.path.exists(self.buildpath) == False:
+        if not os.path.exists(self.buildpath):
             output("Nothing to run")
             return
         chdir(self.buildpath)
@@ -652,15 +652,15 @@ class PdtTest(Test):
             output("Skipping Test (TAU_VALIDATE_PARALLEL is not set, can't run MPI)")
             return
 
-        if usesOption(self.makefile, "pdt") == False:
+        if not usesOption(self.makefile, "pdt"):
             output("Skipping, not configured with PDT")
             return
 
-        if self.checkApplicable() == False:
+        if not self.checkApplicable():
             return
 
         chdir(TEST_ROOT + "/" + self.getActualTest())
-        if os.path.exists(self.buildpath) == False:
+        if not os.path.exists(self.buildpath):
             output("Nothing to run")
             return
         chdir(self.buildpath)
@@ -769,7 +769,7 @@ class PdtMPITestC(PdtTest):
         if usesOption(self.makefile, "mpi") and usesOption(
                 self.makefile, "epilog"):
             return False
-        if usesOption(self.makefile, "mpi") == False:
+        if not usesOption(self.makefile, "mpi"):
             output("Skipping, not configured with MPI")
             return False
         return True
@@ -789,7 +789,7 @@ class PdtMPITestCPP(PdtTest):
         if usesOption(self.makefile, "mpi") and usesOption(
                 self.makefile, "epilog"):
             return False
-        if usesOption(self.makefile, "mpi") == False:
+        if not usesOption(self.makefile, "mpi"):
             output("Skipping, not configured with MPI")
             return False
         return True
@@ -811,7 +811,7 @@ class PdtMPITestF(PdtTest):
         if usesOption(self.makefile, "mpi") and usesOption(
                 self.makefile, "epilog"):
             return False
-        if usesOption(self.makefile, "mpi") == False:
+        if not usesOption(self.makefile, "mpi"):
             output("Skipping, not configured with MPI")
             return False
         if system("grep \"^TAU_F90 \" " + self.fullmakefile) != 0:
@@ -835,7 +835,7 @@ class PdtMPITestGF(PdtTest):
         if usesOption(self.makefile, "mpi") and usesOption(
                 self.makefile, "epilog"):
             return False
-        if usesOption(self.makefile, "mpi") == False:
+        if not usesOption(self.makefile, "mpi"):
             output("Skipping, not configured with MPI")
             return False
         if system("grep \"^TAU_F90 \" " + self.fullmakefile) != 0:

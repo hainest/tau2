@@ -15,12 +15,6 @@ parallel_runner="mpirun -np 2 ./simple"
 class TimeoutError(Exception):
    """Raised if the external process takes too much"""
 
-# python 2.2 check
-if string.atof( ( string.split( sys.version )[0] ) [0:3]) < 2.3:
-    True = 1
-    False = 0
-
-
 def outputHeader(message):
     if verbose == True:
         if html == True:

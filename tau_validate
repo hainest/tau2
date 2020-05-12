@@ -350,11 +350,9 @@ class SimpleTest(Test):
             self.checkResults()
 
     def runMPITest(self, timeout):
-        outputHeader("MPITest(" + self.getActualTest() +
-                     ", run (" + self.fullmakefile + ")")
+        outputHeader("MPITest(" + self.getActualTest() + ", run (" + self.fullmakefile + ")")
         if parallel_runner == "":
-            output(
-                "Warning: Using default mpi launch: \"mpirun -np 2\". Set TAU_VALIDATE_PARALLEL to change")
+            output("Warning: Using default mpi launch: \"mpirun -np 2\". Set TAU_VALIDATE_PARALLEL to change")
         if not self.checkApplicable():
             return
 
@@ -383,11 +381,9 @@ class CTest(SimpleTest):
         return "c"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "scorep"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "scorep"):
             return False
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "epilog"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "epilog"):
             return False
         return True
 
@@ -400,11 +396,9 @@ class CompInstCTest(SimpleTest):
         return "compc"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "scorep"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "scorep"):
             return False
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "epilog"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "epilog"):
             return False
         if system("grep \"^TAU_COMPINST_OPTION\" " + self.fullmakefile) != 0:
             return False
@@ -419,11 +413,9 @@ class CompInstCPPTest(SimpleTest):
         return "compcpp"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "scorep"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "scorep"):
             return False
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "epilog"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "epilog"):
             return False
         if system("grep \"^TAU_COMPINST_OPTION\" " + self.fullmakefile) != 0:
             return False
@@ -438,15 +430,13 @@ class CompInstF90Test(SimpleTest):
         return "compf"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "scorep"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "scorep"):
             return False
         if usesOption(self.makefile, "upc"):
             return False
         if system("grep \"^TAU_F90 \" " + self.fullmakefile) != 0:
             return False
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "epilog"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "epilog"):
             return False
         if system("grep \"^TAU_COMPINST_OPTION\" " + self.fullmakefile) != 0:
             return False
@@ -461,15 +451,13 @@ class FflinkTest(SimpleTest):
         return "fflink"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "scorep"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "scorep"):
             return False
         if usesOption(self.makefile, "upc"):
             return False
         if system("grep \"^TAU_F90 \" " + self.fullmakefile) != 0:
             return False
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "epilog"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "epilog"):
             return False
         return True
 
@@ -482,15 +470,13 @@ class FcpplinkTest(SimpleTest):
         return "fcpplink"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "scorep"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "scorep"):
             return False
         if usesOption(self.makefile, "upc"):
             return False
         if system("grep \"^TAU_F90 \" " + self.fullmakefile) != 0:
             return False
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "epilog"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "epilog"):
             return False
         return True
 
@@ -503,15 +489,13 @@ class FclinkTest(SimpleTest):
         return "fclink"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "scorep"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "scorep"):
             return False
         if usesOption(self.makefile, "upc"):
             return False
         if system("grep \"^TAU_F90 \" " + self.fullmakefile) != 0:
             return False
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "epilog"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "epilog"):
             return False
         return True
 
@@ -681,11 +665,9 @@ class PdtTestC(PdtTest):
         return "pdtc"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "scorep"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "scorep"):
             return False
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "epilog"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "epilog"):
             return False
         return True
 
@@ -704,11 +686,9 @@ class PdtTestCPP(PdtTest):
         return "pdtcpp"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "scorep"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "scorep"):
             return False
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "epilog"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "epilog"):
             return False
         return True
 
@@ -721,13 +701,11 @@ class PdtTestF(PdtTest):
         return "pdtf"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "scorep"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "scorep"):
             return False
         if usesOption(self.makefile, "upc"):
             return False
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "epilog"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "epilog"):
             return False
         if system("grep \"^TAU_F90 \" " + self.fullmakefile) != 0:
             return False
@@ -742,13 +720,11 @@ class PdtTestGF(PdtTest):
         return "pdtgf"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "scorep"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "scorep"):
             return False
         if usesOption(self.makefile, "upc"):
             return False
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "epilog"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "epilog"):
             return False
         if system("grep \"^TAU_F90 \" " + self.fullmakefile) != 0:
             return False
@@ -763,8 +739,7 @@ class PdtMPITestC(PdtTest):
         return "pdtmpic"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "epilog"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "epilog"):
             return False
         if not usesOption(self.makefile, "mpi"):
             output("Skipping, not configured with MPI")
@@ -783,8 +758,7 @@ class PdtMPITestCPP(PdtTest):
         return "pdtmpicpp"
 
     def checkApplicable(self):
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "epilog"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "epilog"):
             return False
         if not usesOption(self.makefile, "mpi"):
             output("Skipping, not configured with MPI")
@@ -805,8 +779,7 @@ class PdtMPITestF(PdtTest):
     def checkApplicable(self):
         if usesOption(self.makefile, "upc"):
             return False
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "epilog"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "epilog"):
             return False
         if not usesOption(self.makefile, "mpi"):
             output("Skipping, not configured with MPI")
@@ -829,8 +802,7 @@ class PdtMPITestGF(PdtTest):
     def checkApplicable(self):
         if usesOption(self.makefile, "upc"):
             return False
-        if usesOption(self.makefile, "mpi") and usesOption(
-                self.makefile, "epilog"):
+        if usesOption(self.makefile, "mpi") and usesOption(self.makefile, "epilog"):
             return False
         if not usesOption(self.makefile, "mpi"):
             output("Skipping, not configured with MPI")
@@ -845,8 +817,7 @@ class PdtMPITestGF(PdtTest):
 
 def usage():
     print("")
-    print(
-        "Usage: tau_validate [-v] [--html] [--tag <tag>] [--timeout <timeout>]")
+    print("Usage: tau_validate [-v] [--html] [--tag <tag>] [--timeout <timeout>]")
     print("                    [--table <file>] [--build] [--run] <target>")
     print("")
     print("Options:")

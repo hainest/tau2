@@ -215,7 +215,7 @@ class Test:
         self.runresult = "na"
         self.message = ""
         self.makefile = shortMakefile(makefile)
-        self.buildpath = "build-" + self.makefile
+        self.buildpath = "build"
         self.errorID = 0
 
     def checkApplicable(self):

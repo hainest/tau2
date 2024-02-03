@@ -502,7 +502,7 @@ FILE* KtauProfiler::OpenOutStream(char* tau_dirname, int node, int context, int 
                 context, tid);
         if ((ktau_fp = fopen (filename, "w+")) == NULL) {
                 errormsg = new char[1024];
-                sprintf(errormsg,"Error: Could not create %s",filename);
+                snprintf(errormsg, 1024, "Error: Could not create %s",filename);
                 perror(errormsg);
 		delete errormsg;
                 return NULL;

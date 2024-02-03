@@ -763,8 +763,9 @@ void TauAllocation::TriggerAllocationEvent(size_t size, char const * filename, i
         {
         event = new TauContextUserEvent("Heap Allocate");
         } else {
-        char * name = new char[strlen(filename)+128];
-        sprintf(name, "Heap Allocate <file=%s, line=%d>", filename, lineno);
+        const int len = strlen(filename)+128;
+        char * name = new char[len];
+        snprintf(name, len,  "Heap Allocate <file=%s, line=%d>", filename, lineno);
         event = new TauContextUserEvent(name);
         delete[] name;
         }
@@ -798,8 +799,9 @@ void TauAllocation::TriggerDeallocationEvent(size_t size, char const * filename,
         {
         e = new TauContextUserEvent("Heap Free");
         } else {
-        char * name = new char[strlen(filename)+128];
-        sprintf(name, "Heap Free <file=%s, line=%d>", filename, lineno);
+        const int len = strlen(filename)+128;
+        char * name = new char[len];
+        snprintf(name, len,  "Heap Free <file=%s, line=%d>", filename, lineno);
         e = new TauContextUserEvent(name);
         delete[] name;
         }
@@ -831,11 +833,13 @@ void TauAllocation::TriggerErrorEvent(char const * descript, char const * filena
         if ((lineno == TAU_MEMORY_UNKNOWN_LINE) &&
             !(strncmp(filename, TAU_MEMORY_UNKNOWN_FILE, TAU_MEMORY_UNKNOWN_FILE_STRLEN)))
         {
-        name = new char[strlen(descript)+128];
-        sprintf(name, "Memory Error! %s", descript);
+        const int len = strlen(descript)+128;
+        name = new char[len];
+        snprintf(name, len,  "Memory Error! %s", descript);
         } else {
-        name = new char[strlen(descript)+strlen(filename)+128];
-        sprintf(name, "Memory Error! %s <file=%s, line=%d>", descript, filename, lineno);
+        const int len = strlen(descript)+strlen(filename)+128;
+        name = new char[len];
+        snprintf(name, len,  "Memory Error! %s <file=%s, line=%d>", descript, filename, lineno);
         }
         e = new TauContextUserEvent(name);
         event_map[file_hash] = e;

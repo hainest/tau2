@@ -810,14 +810,14 @@ bool Tau_bfd_resolveBfdInfo(tau_bfd_handle_t handle, unsigned long probeAddr, Ta
   if ((info.funcname == NULL) && (info.filename != NULL) && (info.lineno > 0)) {
     info.probeAddr = probeAddr;
     info.funcname = (char*)malloc(32);
-    sprintf((char*)info.funcname, "anonymous");
+    snprintf((char*)info.funcname, 32,  "anonymous");
     return true;
   }
 
   // Couldn't resolve the address so fill in fields as best we can.
   if (info.funcname == NULL) {
     info.funcname = (char*)malloc(128);
-    sprintf((char*)info.funcname, "addr=<%lx>", probeAddr);
+    snprintf((char*)info.funcname, 128,  "addr=<%lx>", probeAddr);
   }
   if (info.filename == NULL) {
     if (matchingIdx != -1) {

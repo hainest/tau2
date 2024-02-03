@@ -1198,8 +1198,9 @@ extern "C" void Tau_context_metadata(const char *name, const char *value) {
   // it IS possible to request metadata with no active timer.
   if (current != NULL) {
     FunctionInfo *fi = current->ThisFunction;
-    char *fname = (char*)(malloc(sizeof(char)*(strlen(fi->GetName()) + strlen(fi->GetType()) + 2)));
-    sprintf(fname, "%s %s", fi->GetName(), fi->GetType());
+    const int len = sizeof(char)*(strlen(fi->GetName()) + strlen(fi->GetType()) + 2);
+    char *fname = (char*)(malloc(len));
+    snprintf(fname, len,  "%s %s", fi->GetName(), fi->GetType());
 	key->timer_context = fname;
 	key->call_number = fi->GetCalls(tid);
 	key->timestamp = (x_uint64)current->StartTime[0];
@@ -1228,8 +1229,9 @@ extern "C" void Tau_structured_metadata(const Tau_metadata_object_t *object, boo
     // it IS possible to request metadata with no active timer.
     if (current != NULL) {
       FunctionInfo *fi = current->ThisFunction;
-      char *fname = (char*)(malloc(sizeof(char)*(strlen(fi->GetName()) + strlen(fi->GetType()) + 2)));
-      sprintf(fname, "%s %s", fi->GetName(), fi->GetType());
+      const int len = sizeof(char)*(strlen(fi->GetName()) + strlen(fi->GetType()) + 2);
+      char *fname = (char*)(malloc(len));
+      snprintf(fname, len,  "%s %s", fi->GetName(), fi->GetType());
 	  key->timer_context = fname;
 	  key->call_number = fi->GetCalls(tid);
 	  key->timestamp = (x_uint64)current->StartTime[0];
@@ -1262,8 +1264,9 @@ extern "C" void Tau_phase_metadata(const char *name, const char *value) {
   while (current != NULL) {
     if (current->GetPhase()) {
       FunctionInfo *fi = current->ThisFunction;
-      char *fname = (char*)(malloc(sizeof(char)*(strlen(fi->GetName()) + strlen(fi->GetType()) + 2)));
-      sprintf(fname, "%s %s", fi->GetName(), fi->GetType());
+      const int len = sizeof(char)*(strlen(fi->GetName()) + strlen(fi->GetType()) + 2));
+      char *fname = (char*)(malloc(len);
+      snprintf(fname, len,  "%s %s", fi->GetName(), fi->GetType());
 	  key->timer_context = fname;
 	  key->call_number = fi->GetCalls(tid);
 	  key->timestamp = (x_uint64)current->StartTime[0];

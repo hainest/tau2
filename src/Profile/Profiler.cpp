@@ -250,7 +250,7 @@ const char *TauGetCounterString(void)
 #endif /* TAU_PAPI */
   if (tau_env) {
     char *header = new char[1024];
-    sprintf(header, "templated_functions_MULTI_%s", tau_env);
+    snprintf(header, 1024,  "templated_functions_MULTI_%s", tau_env);
     return header;
   } else {
 #ifdef TAU_PAPI_WALLCLOCKTIME
@@ -1842,7 +1842,7 @@ static int getProfileLocation(int metric, char *str)
     int written_bytes = 0;
     unsigned int profile_dir_len = KTAU_NG_PREFIX_LEN + HOSTNAME_LEN;
     profiledir = new char[profile_dir_len];
-    written_bytes = sprintf(profiledir, "%s.", KTAU_NG_PREFIX);
+    written_bytes = snprintf(profiledir, profile_dir_len,  "%s.", KTAU_NG_PREFIX);
     gethostname(profiledir + written_bytes, profile_dir_len - written_bytes);
 #else
     profiledir = TauEnv_get_profiledir();

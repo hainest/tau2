@@ -2565,8 +2565,9 @@ extern "C" void Tau_global_stop(void) {
 extern "C" char * Tau_phase_enable(const char *group) {
   TauInternalFunctionGuard protects_this_function;
 #ifdef TAU_PROFILEPHASE
-  char *newgroup = new char[strlen(group)+16];
-  sprintf(newgroup, "%s|TAU_PHASE", group);
+  const int len = strlen(group)+16;
+  char *newgroup = new char[len];
+  snprintf(newgroup, len,  "%s|TAU_PHASE", group);
   return newgroup;
 #else /* TAU_PROFILEPHASE */
   return (char *) group;
@@ -2598,7 +2599,7 @@ extern "C" void Tau_mark_group_as_phase(void *ptr)
 extern "C" char const * Tau_append_iteration_to_name(int iteration, char const * name, int slen) {
   TauInternalFunctionGuard protects_this_function;
   char * buff = (char*)malloc(slen+128);
-  sprintf(buff, "%s[%d]", name, iteration);
+  snprintf(buff, slen+128,  "%s[%d]", name, iteration);
   return buff;
 }
 

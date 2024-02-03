@@ -331,8 +331,9 @@ void trace_register_func(char *origname, int id)
       }
     }
     char *dem = Tau_demangle_name(mirror);
-    char *newname = (char *) malloc(strlen(dem)+funclen-i+3);
-    sprintf(newname, "%s %s", dem, &func[i-1]);
+    const int len = strlen(dem)+funclen-i+3;
+    char *newname = (char *) malloc(len);
+    snprintf(newname, len,  "%s %s", dem, &func[i-1]);
     TAU_VERBOSE("name=%s, newname = %s\n", func, newname);
     free(mirror);
     free(dem);

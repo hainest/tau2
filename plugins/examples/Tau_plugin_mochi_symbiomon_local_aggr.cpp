@@ -106,7 +106,7 @@ char *_program_name()
     std::string tmp(path);
     size_t i = tmp.rfind('/', tmp.length());
     if (i != string::npos) {
-        sprintf(path, "%s", tmp.substr(i+1, tmp.length() - i).c_str());
+        snprintf(path, sizeof(path),  "%s", tmp.substr(i+1, tmp.length() - i).c_str());
     }
     return strdup(path);
 #endif
@@ -200,7 +200,7 @@ void Tau_plugin_mochi_init_mochi(void) {
     }
 
     char rank_str[20];
-    sprintf(rank_str, "%d", my_rank);
+    snprintf(rank_str, sizeof(rank_str),  "%d", my_rank);
     char * path = (char*)malloc((strlen(path_)+20)*sizeof(char));
     strcpy(path, path_);
     strcat(path, rank_str);

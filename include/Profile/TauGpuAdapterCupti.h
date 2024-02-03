@@ -179,16 +179,16 @@ public:
 		}
 
         char tmpVal[32] = {0};
-        sprintf(tmpVal, "%u", deviceId);
+        snprintf(tmpVal, sizeof(tmpVal),  "%u", deviceId);
         Tau_metadata_task("CUDA Device", tmpVal, id);
-        sprintf(tmpVal, "%u", contextId);
+        snprintf(tmpVal, sizeof(tmpVal),  "%u", contextId);
         Tau_metadata_task("CUDA Context", tmpVal, id);
         if (TauEnv_get_thread_per_gpu_stream()) {
-            sprintf(tmpVal, "%u", streamId);
+            snprintf(tmpVal, sizeof(tmpVal),  "%u", streamId);
             Tau_metadata_task("CUDA Stream", tmpVal, id);
         }
         if (cdpId > 0) {
-            sprintf(tmpVal, "%u", cdpId);
+            snprintf(tmpVal, sizeof(tmpVal),  "%u", cdpId);
             Tau_metadata_task("CUDA cdpId", tmpVal, id);
         }
 	}

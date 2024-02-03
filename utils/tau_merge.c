@@ -980,7 +980,7 @@ int main(int argc, char *argv[])
 	  if (edfspecified == FALSE)
 	  { /* use default edf file names  "events.*.edf" */
 	    char eventfilename[2048];
-	    sprintf(eventfilename, "events.%d.edf", trcdes[numtrc].nid); 
+	    snprintf(eventfilename, sizeof(eventfilename),  "events.%d.edf", trcdes[numtrc].nid); 
 	    open_edf_file(eventfilename, numtrc, TRUE);
 	  }
 	  if (edfspecified && numtrc >= numedfprocessed) {

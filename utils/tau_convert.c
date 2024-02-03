@@ -883,7 +883,7 @@ static char *Today (void)
 
   t = time ((time_t *) 0);
   tm = localtime (&t);
-  sprintf (tibuf, "%s-%02d-%02d", Months[tm->tm_mon], tm->tm_mday, 1900+tm->tm_year);
+  snprintf (tibuf, sizeof(tibuf),  "%s-%02d-%02d", Months[tm->tm_mon], tm->tm_mday, 1900+tm->tm_year);
   return (tibuf);
 }
 

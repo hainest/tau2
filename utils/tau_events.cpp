@@ -166,7 +166,7 @@ int open_edf_file(char *prefix, int nodeid, int prefix_is_filename)
   }
   else 
   { /* default mode of operation, use prefix and node id */
-    sprintf(filename, "%s.%d.edf", prefix,nodeid);
+    snprintf(filename, sizeof(filename),  "%s.%d.edf", prefix,nodeid);
   }
 
   if ( (edfFiles[nodeid] = fopen (filename, "r")) == NULL )
@@ -385,7 +385,7 @@ int GID(int node, long local)
     if (edfspecified == FALSE)
     {
       char eventfilename[2048];
-      sprintf(eventfilename, "events.%d.edf", get_nodeid(node));
+      snprintf(eventfilename, sizeof(eventfilename),  "events.%d.edf", get_nodeid(node));
       open_edf_file(eventfilename, node, TRUE);
 #ifdef DEBUG
       printf("re-opening %s\n", eventfilename);

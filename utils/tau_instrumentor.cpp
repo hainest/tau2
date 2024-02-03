@@ -2482,7 +2482,7 @@ public:
 
   virtual void output(char *iostmt, int id) {
     char phrase[4096];
-    sprintf (phrase, "       tio_%d_sz = tio_%d_sz + sizeof(%s)\n", id, id, str.c_str());
+    snprintf (phrase, sizeof(phrase),  "       tio_%d_sz = tio_%d_sz + sizeof(%s)\n", id, id, str.c_str());
     strcat(iostmt, phrase);
   }
 
@@ -2791,7 +2791,7 @@ int printTauAllocStmt(ifstream& istr, ofstream& ostr, char inbuf[], vector<itemR
       while (p && *p == ' ')
         p++; /* eat up leading space */
       sprintf(allocstmt, "       call TAU_ALLOC(%s, %d, %s(%s), '", p, (*it)->line, TAU_SIZE_TOK, p);
-      sprintf(suffixstmt, "%s, variable=%s", (*it)->snippet.c_str(), p);
+      snprintf(suffixstmt, sizeof(suffixstmt),  "%s, variable=%s", (*it)->snippet.c_str(), p);
       string prefix = string(allocstmt);
       string suffix = string(suffixstmt);
       writeLongFortranStatement(ostr, prefix, suffix);
@@ -2895,7 +2895,7 @@ int printTauDeallocStmt(ifstream& istr, ofstream& ostr, char inbuf[], vector<ite
 /* new */
      sprintf(deallocstmt, "       call TAU_DEALLOC(%s, %d, '",
         p, (*it)->line);
-     sprintf(suffixstmt, "%s, variable=%s", (*it)->snippet.c_str(), p);
+     snprintf(suffixstmt, sizeof(suffixstmt),  "%s, variable=%s", (*it)->snippet.c_str(), p);
      string prefix=string(deallocstmt);
      string suffix=string(suffixstmt);
      writeLongFortranStatement(ostr, prefix, suffix);
@@ -3049,12 +3049,12 @@ int printTauIOStmt(ifstream& istr, ofstream& ostr, char inbuf[], vector<itemRef 
       while (p && *p == ' ') p++; /* eat up leading space */
       if (strlen(p) == 0) continue ; /* don't put sizeof() */
       
-      sprintf(string_containing_sizeof, "+sizeof(%s)", p); 
+      snprintf(string_containing_sizeof, sizeof(string_containing_sizeof),  "+sizeof(%s)", p); 
       origlen = strlen(iostmt);
       sizeoflen = strlen(string_containing_sizeof);
       
       if (origlen+sizeoflen >= 72) { /* exceeds 72 columns -- break it up! */
-	sprintf(string_containing_sizeof, "\n      tio_%d_sz = tio_%d_sz+sizeof(%s)",
+	snprintf(string_containing_sizeof, sizeof(string_containing_sizeof),  "\n      tio_%d_sz = tio_%d_sz+sizeof(%s)",
 		lineno, lineno, p);
       }
       strcat(iostmt, string_containing_sizeof);

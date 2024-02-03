@@ -138,11 +138,11 @@ int WriteMetricInTauFormat(enum metrics measurement, int rank, int numroutines, 
   /* Create a new directory name */
   dprintf("METRIC: %s\n", metric);
   
-  sprintf(newdirname, "./MULTI__%s", metric);
+  snprintf(newdirname, sizeof(newdirname),  "./MULTI__%s", metric);
 
   mkdir(newdirname,S_IRWXU | S_IRGRP | S_IXGRP);
 
-  sprintf(filename, "%s/profile.%d.0.0", newdirname, rank);
+  snprintf(filename, sizeof(filename),  "%s/profile.%d.0.0", newdirname, rank);
   if ((fp = fopen(filename, "w+")) == NULL) {
     perror("ERROR: writing profile file");
     exit(1);
@@ -239,7 +239,7 @@ int main(int argc, char **argv)
           {
             broken_down_time = localtime(&lt);
             sprintf(data_directory, "%04d%02d%02d", 1900+broken_down_time->tm_year, broken_down_time->tm_mon+1, broken_down_time->tm_mday);
-            sprintf(filename, "perf_data.%s/header.0", data_directory);
+            snprintf(filename, sizeof(filename), "perf_data.%s/header.0", data_directory);
             if (argc == 1) {
 	      if ((fp = fopen(filename, "r")) == (FILE *)NULL) ShowUsage();
               fclose(fp); 

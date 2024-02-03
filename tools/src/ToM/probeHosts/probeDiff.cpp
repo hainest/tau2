@@ -32,7 +32,7 @@ int main(int argc, char **argv)
     strcpy(outdirName,".");
   }
   char infileString[512];
-  sprintf(infileString,"%s/allhosts.txt",outdirName);
+  snprintf(infileString, sizeof(infileString), "%s/allhosts.txt",outdirName);
   fullHostFile = fopen(infileString, "r");
 
   // Building hash table counts for hosts in a full job reservation
@@ -84,7 +84,7 @@ int main(int argc, char **argv)
   if (rank == 0) {
     FILE *outfile;
     char outfileString[512];
-    sprintf(outfileString,"%s/mrnethosts.txt",outdirName);
+    snprintf(outfileString, sizeof(outfileString), "%s/mrnethosts.txt",outdirName);
     outfile = fopen(outfileString,"w");
     for (it=hostHash.begin(); it!=hostHash.end(); it++) {
       // remove all references to hosts completely consumed by the MPI

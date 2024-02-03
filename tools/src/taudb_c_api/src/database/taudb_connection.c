@@ -135,7 +135,7 @@ TAUDB_CONNECTION* taudb_try_connect_config(char* config_name, taudb_error* err, 
    const char* config_prefix = "perfdmf.cfg";
    const char* home = getenv("HOME");
    char config_file[256];
-   sprintf(config_file, "%s/.ParaProf/%s.%s", home, config_prefix, config_name);
+   snprintf(config_file, sizeof(config_file),  "%s/.ParaProf/%s.%s", home, config_prefix, config_name);
    return taudb_try_connect_config_file(config_file, err, taudb_numItems);
 }
 

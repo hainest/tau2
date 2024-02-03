@@ -48,7 +48,7 @@ int main(int argc, char **argv)
       strcpy(outname,".");
     }
     char outfileString[512];
-    sprintf(outfileString,"%s/allhosts.txt",outname);
+    snprintf(outfileString, sizeof(outfileString), "%s/allhosts.txt",outname);
     outfile = fopen(outfileString,"w");
     for (it=hostHash.begin(); it!=hostHash.end(); it++) {
       fprintf(outfile,"%d:%s\n",(*it).second,(*it).first.c_str());

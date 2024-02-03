@@ -77,7 +77,7 @@ void process_directory(const char* directory_name, TAUDB_TRIAL* trial) {
     while (ep != NULL) {
       // check for profile.x.x.x files
       if (strncmp(ep->d_name, profile_prefix, 8) == 0) {
-        sprintf(profile_file, "%s/%s", directory_name, ep->d_name);
+        snprintf(profile_file, sizeof(profile_file),  "%s/%s", directory_name, ep->d_name);
 #ifdef TAUDB_DEBUG
         printf("Parsing profile file %s...\n", profile_file);
 #endif
@@ -85,7 +85,7 @@ void process_directory(const char* directory_name, TAUDB_TRIAL* trial) {
         trial->total_threads++;
       } else if (strncmp(ep->d_name, papi_prefix, 7) == 0) {
       // check for MULTI__* directories
-        sprintf(profile_file, "%s/%s", directory_name, ep->d_name);
+        snprintf(profile_file, sizeof(profile_file),  "%s/%s", directory_name, ep->d_name);
         process_directory(profile_file, trial);
       }
       ep = readdir(dp);
@@ -138,7 +138,7 @@ void count_profiles(const char* directory_name, int* counts) {
 		}
       } else if (strncmp(ep->d_name, papi_prefix, 7) == 0) {
       // check for MULTI__* directories
-        sprintf(subdir, "%s/%s", directory_name, ep->d_name);
+        snprintf(subdir, sizeof(subdir),  "%s/%s", directory_name, ep->d_name);
 	    // recurse
 		int tmp_counts[3] = {0,0,0};
         count_profiles(subdir, tmp_counts);

@@ -180,11 +180,11 @@ void taudb_private_save_secondary_metadata(TAUDB_CONNECTION* connection, TAUDB_T
 	    length = length + strlen(secondary_metadata->value[i]) + 1;
 	  }
 	  char *tmpstr = calloc(length, sizeof(char));
-	  sprintf(tmpstr, "[%s", secondary_metadata->value[i]);
+	  snprintf(tmpstr, length,  "[%s", secondary_metadata->value[i]);
 	  for (i = 1 ; i < secondary_metadata->num_values ; i++) {
-	    sprintf(tmpstr, "%s,%s", tmpstr, secondary_metadata->value[i]);
+	    snprintf(tmpstr, length,  "%s,%s", tmpstr, secondary_metadata->value[i]);
 	  }
-	  sprintf(tmpstr, "%s]", tmpstr);
+	  snprintf(tmpstr, length,  "%s]", tmpstr);
       paramValues[7] = tmpstr;
       paramValues[8] = "TRUE";
 	} else {

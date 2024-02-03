@@ -136,7 +136,7 @@ char* taudb_create_hash_key_2(int thread, const char* timer) {
   // add colon character and null terminator
   int length = strlen(str_thread) + strlen(timer) + 2;
   char* key = (char*)calloc(length, sizeof(char));
-  sprintf(key, "%d:%s", thread, timer);
+  snprintf(key, length,  "%d:%s", thread, timer);
   return key;
 }
 
@@ -146,7 +146,7 @@ char* taudb_create_hash_key_3(int thread, const char* timer, const char* metric)
   // add colon characters and null terminator
   int length = strlen(str_thread) + strlen(timer) + strlen(metric) + 3;
   char* key = (char*)calloc(length, sizeof(char));
-  sprintf(key, "%d:%s:%s", thread, timer, metric);
+  snprintf(key, length,  "%d:%s:%s", thread, timer, metric);
   return key;
 }
 

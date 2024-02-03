@@ -407,8 +407,9 @@ TAUDB_TIMER_CALLPATH* taudb_create_timer_callpath(TAUDB_TRIAL* trial, TAUDB_TIME
   if (parent == NULL) {
     tmp_name = timer->name;
   } else {
-    tmp_name = (char*)malloc((sizeof(char))*(strlen(timer_callpath->name) + strlen(parent->name) + 5));
-	sprintf(tmp_name, "%s => %s", parent->name, timer->name);
+    const int size = (sizeof(char))*(strlen(timer_callpath->name) + strlen(parent->name) + 5);
+    tmp_name = (char*)malloc(size);
+	snprintf(tmp_name, size,  "%s => %s", parent->name, timer->name);
   }
   if (trial->timer_callpaths_by_name != NULL) {
     // does this timer_callpath exist?

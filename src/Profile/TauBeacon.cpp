@@ -112,7 +112,7 @@ extern "C" int TauBeaconSubscribe(char *topic_name, char *topic_scope, void (*ha
    // initialize data structures 
    memset(&binfo, 0, sizeof(binfo));
    strcpy(binfo.beep_version, "1.0");
-   sprintf(beep_name, "TAU_BEACON_BEEP_%d", getpid());
+   snprintf(beep_name, sizeof(beep_name),  "TAU_BEACON_BEEP_%d", getpid());
    strcpy(binfo.beep_name, beep_name);
    
    ret = BEACON_Connect(&binfo, &handle);
@@ -122,7 +122,7 @@ extern "C" int TauBeaconSubscribe(char *topic_name, char *topic_scope, void (*ha
    }
 
    char* caddr = getenv("BEACON_TOPOLOGY_SERVER_ADDR");
-   sprintf(filter_string, "cluster_name=%s,cluster_port=10809,topic_scope=%s,topic_name=%s", caddr, topic_scope, topic_name);
+   snprintf(filter_string, sizeof(filter_string),  "cluster_name=%s,cluster_port=10809,topic_scope=%s,topic_name=%s", caddr, topic_scope, topic_name);
    #ifdef DEBUG_PROF
    printf("Filter string is %s \n", filter_string);
    #endif /* DEBUG_PROF */

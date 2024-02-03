@@ -403,7 +403,7 @@ char * get_proxy_name(unsigned long ip) {
             sprintf(routine, "%s [{%s} {%d,0}]", node->info.funcname, node->info.filename, node->info.lineno);
         } else {
         char addrString[64];
-        sprintf(addrString, "%p", (void*)ip);
+        snprintf(addrString, sizeof(addrString),  "%p", (void*)ip);
             unsigned int size = strlen(__BFD_UNKNOWN__) + strlen(addrString) + 2;
             routine = (char*)malloc(size);
             sprintf(routine, "%s %s", __BFD_UNKNOWN__, addrString);
@@ -473,7 +473,7 @@ char * show_backtrace (int tid, int offset) {
                 sprintf(routine, "%s [{%s} {%d,0}]", node->info.funcname, node->info.filename, node->info.lineno);
               } else {
             char addrString[64];
-            sprintf(addrString, "%p", (void*)ip);
+            snprintf(addrString, sizeof(addrString),  "%p", (void*)ip);
                 unsigned int size = strlen(__BFD_UNKNOWN__) + strlen(addrString) + 2;
                 routine = (char*)malloc(size);
                 sprintf(routine, "%s %s", __BFD_UNKNOWN__, addrString);

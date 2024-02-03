@@ -443,21 +443,21 @@ void Tau_cupti_set_device_props() {
 
     /* save some metadata now */
 	char tmp_name[256];
-	sprintf(tmp_name, "GPU[%d] Total Constant Memory", dev);
+	snprintf(tmp_name, sizeof(tmp_name),  "GPU[%d] Total Constant Memory", dev);
     char tmp_value[256];
-	sprintf(tmp_value, "%lu", props.totalGlobalMem);
+	snprintf(tmp_value, sizeof(tmp_value),  "%lu", props.totalGlobalMem);
     Tau_metadata_register(tmp_name, tmp_value);
-	sprintf(tmp_name, "GPU[%d] L2 Cache Size", dev);
+	snprintf(tmp_name, sizeof(tmp_name),  "GPU[%d] L2 Cache Size", dev);
     Tau_metadata_register(tmp_name, props.l2CacheSize);
-	sprintf(tmp_name, "GPU[%d] Registers per Block", dev);
+	snprintf(tmp_name, sizeof(tmp_name),  "GPU[%d] Registers per Block", dev);
     Tau_metadata_register(tmp_name, props.regsPerBlock);
-	sprintf(tmp_name, "GPU[%d] Shared Memory per Block", dev);
+	snprintf(tmp_name, sizeof(tmp_name),  "GPU[%d] Shared Memory per Block", dev);
     Tau_metadata_register(tmp_name, props.sharedMemPerBlock);
-	sprintf(tmp_name, "GPU[%d] Max Threads per Block", dev);
+	snprintf(tmp_name, sizeof(tmp_name),  "GPU[%d] Max Threads per Block", dev);
     Tau_metadata_register(tmp_name, props.maxThreadsPerBlock);
-	sprintf(tmp_name, "GPU[%d] Max Threads per Multiprocessor", dev);
+	snprintf(tmp_name, sizeof(tmp_name),  "GPU[%d] Max Threads per Multiprocessor", dev);
     Tau_metadata_register(tmp_name, props.maxThreadsPerMultiProcessor);
-	sprintf(tmp_name, "GPU[%d] Warp Size", dev);
+	snprintf(tmp_name, sizeof(tmp_name),  "GPU[%d] Warp Size", dev);
     Tau_metadata_register(tmp_name, props.warpSize);
 
 	__deviceMap()[dev] = dev_record;

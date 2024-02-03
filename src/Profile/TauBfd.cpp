@@ -1007,7 +1007,7 @@ static char const * Tau_bfd_internal_getExecutablePath()
     RtsLayer::LockEnv();
     if (!init) {
 #if defined(TAU_AIX)
-      sprintf(path, "/proc/%d/object/a.out", RtsLayer::getPid());
+      snprintf(path, sizeof(path),  "/proc/%d/object/a.out", RtsLayer::getPid());
 #elif defined(TAU_BGP)
       if (Tau_bfd_internal_getBGPExePath(path) != 0) {
         fprintf(stderr, "Tau_bfd_internal_getExecutablePath: "
@@ -1015,7 +1015,7 @@ static char const * Tau_bfd_internal_getExecutablePath()
             "symbols will not be resolved\n", path);
       }
 #elif defined(TAU_BGQ)
-      sprintf(path, "%s", "/proc/self/exe");
+      snprintf(path, sizeof(path),  "%s", "/proc/self/exe");
 #elif defined(__APPLE__)
       uint32_t size = sizeof(path);
       _NSGetExecutablePath(path, &size);
@@ -1023,7 +1023,7 @@ static char const * Tau_bfd_internal_getExecutablePath()
       GetModuleFileName(NULL, path, sizeof(path));
 #else
       // Default: Linux systems
-      sprintf(path, "%s", "/proc/self/exe");
+      snprintf(path, sizeof(path),  "%s", "/proc/self/exe");
 #endif
       init = true;
     }

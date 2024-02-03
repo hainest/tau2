@@ -282,7 +282,7 @@ void * TauAllocation::Allocate(size_t size, size_t align, size_t min_align,
   // Alignment must be a multiple of the minimum alignment (a power of two)
   if (min_align && ((align < min_align) || (align & (min_align-1)))) {
     char s[256];
-    sprintf(s, "Alignment is not a multiple of %ld", min_align);
+    snprintf(s, sizeof(s),  "Alignment is not a multiple of %ld", min_align);
     TriggerErrorEvent(s, filename, lineno);
     return NULL;
   }
@@ -1935,7 +1935,7 @@ extern "C" void Tau_track_mem_event_always(const char * name, const char * prefi
 #else
   char event_name[event_len];
 #endif /* TAU_NEC_SX */
-  sprintf(event_name, "%s %s", prefix, name);
+  snprintf(event_name, sizeof(event_name),  "%s %s", prefix, name);
   if(TauEnv_get_mem_callpath()) {
     TAU_TRIGGER_CONTEXT_EVENT(event_name, (double)size);
   } else {

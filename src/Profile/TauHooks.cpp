@@ -558,7 +558,7 @@ void  tau_register_func(char **func, char** file, int* lineno,
       trace_register_func(tmpstr, id);
     } else {
       char funcname[2048];
-      sprintf(funcname, "%s [{%s}{%d}]", tmpstr, *file, *lineno);
+      snprintf(funcname, sizeof(funcname),  "%s [{%s}{%d}]", tmpstr, *file, *lineno);
       trace_register_func(funcname, id);
       TAU_VERBOSE("TAU : tau_register_func: name = %s, id = %d\n", funcname, id);
     }
@@ -635,9 +635,9 @@ void  tau_register_loop(char **func, char** file, int* lineno,
   char lname[2048];
   char *loopname;
   if (((*file) != (char *)NULL) && (*lineno != 0)) {
-    sprintf(lname, "Loop: %s [{%s}{%d}]", *func, *file, *lineno);
+    snprintf(lname, sizeof(lname),  "Loop: %s [{%s}{%d}]", *func, *file, *lineno);
   } else {
-    sprintf(lname, "Loop: %s ",*func);
+    snprintf(lname, sizeof(lname),  "Loop: %s ",*func);
   }
   loopname = strdup(lname);
   tau_register_func(&loopname, file, lineno, id);

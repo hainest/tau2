@@ -238,15 +238,15 @@ int origkey = 1;
     /* Create FunctionInfo objects for each of these methods */
 
     if (TauEnv_get_tracing()) {
-      sprintf(funcname, "%s  %s", event->u.class_load.class_name, 
+      snprintf(funcname, sizeof(funcname),  "%s  %s", event->u.class_load.class_name, 
 	      event->u.class_load.methods[i].method_name); 
     } else {
-      sprintf(funcname, "%s  %s %s", event->u.class_load.class_name, 
+      snprintf(funcname, sizeof(funcname),  "%s  %s %s", event->u.class_load.class_name, 
 	      event->u.class_load.methods[i].method_name, 
 	      event->u.class_load.methods[i].method_signature); 
     }
     
-    sprintf(classname, "%s", event->u.class_load.class_name); 
+    snprintf(classname, sizeof(classname),  "%s", event->u.class_load.class_name); 
     groupname = strtok(classname, " /=");
 
 /* old
@@ -336,7 +336,7 @@ void TauJavaLayer::ThreadStart(JVMPI_Event *event) {
 	event->u.thread_start.group_name);
 #endif /* DEBUG_PROF */
   char thread_name[256];
-  sprintf(thread_name, "THREAD=%s; THREAD GROUP=%s", event->u.thread_start.thread_name,
+  snprintf(thread_name, sizeof(thread_name),  "THREAD=%s; THREAD GROUP=%s", event->u.thread_start.thread_name,
 	  event->u.thread_start.group_name); 
   CreateTopLevelRoutine(thread_name, " ", "THREAD", tid); 
 }

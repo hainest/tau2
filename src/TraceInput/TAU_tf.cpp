@@ -585,7 +585,7 @@ int Ttf_ReadNumEvents( Ttf_FileHandleT fileHandle, Ttf_CallbacksT callbacks,
       /*
       sprintf(nodename, "Node %d Thread %d", nid, tid);
       */
-      sprintf(nodename, "process %d:%d", nid, tid);
+      snprintf(nodename, sizeof(nodename),  "process %d:%d", nid, tid);
 
       /* invoke callback routine */
       if (*callbacks.DefThread)

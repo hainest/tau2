@@ -119,7 +119,7 @@ public:
 
 	const char* gpuIdentifier() const {
 		char *rtn = (char*) malloc(50*sizeof(char));
-		sprintf(rtn, "Dev%d/Ctx%d/Strm%d/cdp%d/cor%d/task%d", deviceId, contextId, streamId, cdpId, correlationId, taskId);
+		snprintf(rtn, 50*sizeof(char),  "Dev%d/Ctx%d/Strm%d/cdp%d/cor%d/task%d", deviceId, contextId, streamId, cdpId, correlationId, taskId);
 		return rtn;
 	};
 	x_uint64 id_p1() const {

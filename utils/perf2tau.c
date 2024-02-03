@@ -232,13 +232,14 @@ int main(int argc, char **argv)
         if (!data_directory)
         {
           lt = time(NULL);
-          data_directory = (char *) malloc(9);
+          const int len = 9;
+          data_directory = (char *) malloc(len);
           if (lt == -1)
             strcpy(data_directory, "00000000");
           else
           {
             broken_down_time = localtime(&lt);
-            sprintf(data_directory, "%04d%02d%02d", 1900+broken_down_time->tm_year, broken_down_time->tm_mon+1, broken_down_time->tm_mday);
+            snprintf(data_directory, len,  "%04d%02d%02d", 1900+broken_down_time->tm_year, broken_down_time->tm_mon+1, broken_down_time->tm_mday);
             snprintf(filename, sizeof(filename), "perf_data.%s/header.0", data_directory);
             if (argc == 1) {
 	      if ((fp = fopen(filename, "r")) == (FILE *)NULL) ShowUsage();

@@ -330,8 +330,9 @@ int store_merged_edffile(char *filename)
   map<const char*, EventDescr *, ltstr>::iterator it;
 
   if ((fp = fopen (filename, "w+")) == NULL) {
-    errormsg = new char[strlen(filename)+32]; 
-    sprintf(errormsg,"Error: Could not create %s",filename);
+    const int len = strlen(filename)+32;
+    errormsg = new char[len]; 
+    snprintf(errormsg, len, "Error: Could not create %s",filename);
     perror(errormsg);
     return 0;
   }

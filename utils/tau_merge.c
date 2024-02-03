@@ -1026,11 +1026,12 @@ int main(int argc, char *argv[])
   }
   else
   {
-    trcfile = (char *) malloc ((strlen(argv[argc-1])+5) * sizeof(char));
+    const int len = (strlen(argv[argc-1])+5) * sizeof(char);
+    trcfile = (char *) malloc (len);
     if ( strcmp ((argv[argc-1])+strlen(argv[argc-1])-4, ".trc") == 0 )
       strcpy (trcfile, argv[argc-1]);
     else
-      sprintf (trcfile, "%s.trc", argv[argc-1]);
+      snprintf (trcfile, len,  "%s.trc", argv[argc-1]);
 
     if ( access (trcfile, F_EXISTS) == 0 && isatty(2) )
     {

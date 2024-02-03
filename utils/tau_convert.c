@@ -1759,7 +1759,7 @@ int main (int argc, char *argv[])
       /* Get the date in the form dd/mm/yy */
 
 #ifdef TAU_WINDOWS
-      sprintf (date, "Unsupported in Win32");
+      snprintf (date, sizeof(date),  "Unsupported in Win32");
 #else
       gettimeofday (&tp, &tzp);
       clock = tp.tv_sec;
@@ -1795,7 +1795,7 @@ int main (int argc, char *argv[])
           if(tempList == (char*)NULL){
             perror("Malloc error-Paraver Header Var. tempList");
           }
-          sprintf(tempList,"%d:%d,",maxtid[i]+1,i+1);
+          snprintf(tempList, size * sizeof (char), "%d:%d,",maxtid[i]+1,i+1);
           if(taskList == (char*)NULL){
             perror("Malloc error-Paraver Header Var. taskList");
           }          
@@ -1803,7 +1803,7 @@ int main (int argc, char *argv[])
         }
         
         else{
-          sprintf(tempList,"%d:%d",maxtid[i]+1,i+1);
+          snprintf(tempList, size * sizeof (char), "%d:%d",maxtid[i]+1,i+1);
           taskList = strcat(taskList,tempList);
         }
         

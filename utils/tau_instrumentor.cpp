@@ -2790,7 +2790,7 @@ int printTauAllocStmt(ifstream& istr, ofstream& ostr, char inbuf[], vector<itemR
       char *p = varname;
       while (p && *p == ' ')
         p++; /* eat up leading space */
-      sprintf(allocstmt, "       call TAU_ALLOC(%s, %d, %s(%s), '", p, (*it)->line, TAU_SIZE_TOK, p);
+      snprintf(allocstmt, INBUF_SIZE,  "       call TAU_ALLOC(%s, %d, %s(%s), '", p, (*it)->line, TAU_SIZE_TOK, p);
       snprintf(suffixstmt, sizeof(suffixstmt),  "%s, variable=%s", (*it)->snippet.c_str(), p);
       string prefix = string(allocstmt);
       string suffix = string(suffixstmt);
@@ -2893,7 +2893,7 @@ int printTauDeallocStmt(ifstream& istr, ofstream& ostr, char inbuf[], vector<ite
      while (p && *p == ' ') p++; /* eat up leading space */
 
 /* new */
-     sprintf(deallocstmt, "       call TAU_DEALLOC(%s, %d, '",
+     snprintf(deallocstmt, INBUF_SIZE,  "       call TAU_DEALLOC(%s, %d, '",
         p, (*it)->line);
      snprintf(suffixstmt, sizeof(suffixstmt),  "%s, variable=%s", (*it)->snippet.c_str(), p);
      string prefix=string(deallocstmt);
@@ -3034,7 +3034,7 @@ int printTauIOStmt(ifstream& istr, ofstream& ostr, char inbuf[], vector<itemRef 
   printf ("After checking format string: line = %s\n", line);
 #endif /* DEBUG */
   
-  sprintf(iostmt, "      tio_%d_sz = 0",lineno);
+  snprintf(iostmt, INBUF_SIZE,  "      tio_%d_sz = 0",lineno);
   while (!done)
   {
     done = getNextToken(line, varname);

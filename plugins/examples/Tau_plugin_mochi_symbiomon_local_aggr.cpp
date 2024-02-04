@@ -201,8 +201,9 @@ void Tau_plugin_mochi_init_mochi(void) {
 
     char rank_str[20];
     snprintf(rank_str, sizeof(rank_str),  "%d", my_rank);
-    char * path = (char*)malloc((strlen(path_)+20)*sizeof(char));
-    strcpy(path, path_);
+    const int path_len = (strlen(path_)+20)*sizeof(char);
+    char * path = (char*)malloc(path_len);
+    strncpy(path,  path_, path_len); 
     strcat(path, rank_str);
 
     sdskv_config_t db_config = {

@@ -402,7 +402,7 @@ int FillFunctionDB(int node, int ctx, int thr, char *prefix){
   if (read_summary_files) {
     static int invocation = 0;
     if (invocation > 0) return 0;
-    strcpy(filename, prefix);
+    strncpy(filename,  prefix, sizeof(filename)); 
     invocation++;
   }
   else {
@@ -1897,7 +1897,7 @@ static void ReadEventTable (char file[]){
     j = 0;
     while((lbuf[j] != '"') && (j < strlen(lbuf))) j++; /* skip */
     if ( j != strlen (lbuf)){
-      strcpy(sbuf, &lbuf[j]);
+      strncpy(sbuf,  &lbuf[j], sizeof(sbuf)); 
       sbuf[strlen(sbuf) - 1] = '\0' ; /* remove \n at the end */
     }
     else {
@@ -1941,7 +1941,7 @@ static int ProcessFile (int no, int ctx, int thr, int longname, int max, char pr
   else  /* hpc++ profile.0.0.0 etc. */
     snprintf (proffile, sizeof(proffile),  "%s.%d.%d.%d", prefix, no, ctx, thr);
   if (read_summary_files) {
-    strcpy(proffile, prefix);
+    strncpy(proffile,  prefix, sizeof(proffile)); 
   }
 
   /* -- read profile data file and set profile data tables ------------------ */
@@ -2721,8 +2721,8 @@ int main (int argc, char *argv[]){
     printf("Reading Profile files in %s.*\n", file);
 
   if (strstr(file, "profile.")!= 0 && strlen(file) > 10) {
-    strcpy(proffile, file);
-    strcpy(summary_prefix,file);
+    strncpy(proffile,  file, sizeof(proffile)); 
+    strncpy(summary_prefix, file, sizeof(summary_prefix)); 
     read_summary_files=true;
   }
 

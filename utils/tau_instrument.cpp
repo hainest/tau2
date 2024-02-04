@@ -625,7 +625,7 @@ void parseInstrumentationCommand(char *line, int lineno)
       WSPACE(line);
       DEBUG_MSG("GOT routine = %s\n", pname);
     } else {
-      strcpy(pname, "#");
+      strncpy(pname,  "#", sizeof(pname)); 
     }
     if (strncmp(line, "code", 4) == 0) {
       line += 4; /* move 4 spaces */
@@ -688,7 +688,7 @@ void parseInstrumentationCommand(char *line, int lineno)
       WSPACE(line);
       DEBUG_MSG("GOT routine = %s\n", pname);
     } else {
-      strcpy(pname, "#");
+      strncpy(pname,  "#", sizeof(pname)); 
     }
     if (strncmp(line, "code", 4) == 0) {
       line += 4;
@@ -751,7 +751,7 @@ void parseInstrumentationCommand(char *line, int lineno)
       WSPACE(line);
       DEBUG_MSG("GOT routine = %s\n", pname);
     } else {
-      strcpy(pname, "#");
+      strncpy(pname,  "#", sizeof(pname)); 
     }
     if (strncmp(line, "code", 4) == 0) {
       line += 4;
@@ -852,7 +852,7 @@ void parseInstrumentationCommand(char *line, int lineno)
       DEBUG_MSG("GOT routine = %s\n", pname);
 
     } else {
-      strcpy(pname, "#");
+      strncpy(pname,  "#", sizeof(pname)); 
     }
     if (strncmp(line, "code", 4) == 0) {
       line += 4;

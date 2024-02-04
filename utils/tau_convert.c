@@ -1518,7 +1518,7 @@ int main (int argc, char *argv[])
       name[k-j+1] = '"';
       name[k-j+2] = '\0'; /* terminate name */
 
-      strcpy(param, &linebuf[k+2]);
+      strncpy(param,  &linebuf[k+2], sizeof(param)); 
 
       /* Fix 13/10 to 10 for event files generated with windows */
 /*       if (param[strlen(param)-2] == 13) { */

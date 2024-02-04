@@ -731,7 +731,7 @@ char * getGCCHOME(void) {
   }
 
   /* if TAU_GCC_HOME is not set use this */
-  strcpy(command, " tau_cc.sh -show | awk '{c=split($0, s); for(n=1; n<=c; ++n) print s[n] }' | grep gcc | grep '^.L' | sed -e 's/-L//'");
+  strncpy(command,  " tau_cc.sh -show | awk '{c=split($0, s); for(n=1; n<=c; ++n) print s[n] }' | grep gcc | grep '^.L' | sed -e 's/-L//'", sizeof(command)); 
 
   fp=popen(command, "r");
 
@@ -1239,7 +1239,7 @@ int main(int argc, char **argv){
        case 'o':
           ovalue = optarg;
           binaryRewrite = 1; /* binary rewrite is true */
-          strcpy(outfile, ovalue);
+          strncpy(outfile,  ovalue, sizeof(outfile)); 
           break;
        case 'l':
           libraryRewrite = 1; /* binary rewrite is true */

@@ -611,7 +611,7 @@ int main(int argc, char **argv)
 
   /* Define group ids */
   char name[1024];
-  strcpy(name, "TAU default group");
+  strncpy(name,  "TAU default group", sizeof(name)); 
   OTF_Writer_writeDefProcessGroup((OTF_Writer *)fcb, TAU_GLOBAL_STREAM_ID, sampgroupid, name, totalnidtids, idarray);
 
   EndOfTrace = 0;

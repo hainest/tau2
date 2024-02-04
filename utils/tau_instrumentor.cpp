@@ -2331,7 +2331,7 @@ static void blankQuote(char *str) {
  */
 bool isImpliedDo(char *str) {
   char tmp[4096];
-  strcpy (tmp, str);
+  strncpy (tmp,  str, sizeof(tmp)); 
 
   blankQuote(tmp);
   removeWhitespace(tmp);
@@ -2520,7 +2520,7 @@ void recurseCrap(char* &buf, listTreeElement *element) {
 void processImpliedDo(char *iostmt, char *element, int id) {
 
   char tmp[4096];
-  strcpy (tmp, element);
+  strncpy (tmp,  element, sizeof(tmp)); 
 
   blankQuote(tmp);
   removeWhitespace(tmp);
@@ -3723,7 +3723,7 @@ bool instrumentFFile(PDB& pdb, pdbFile* f, string& outfile, string& group_name)
 		  additionalLinesRead=printTauAllocStmt(istr, ostr, &inbuf[alloccol-1], it, previousline);
 		  inputLineNo += additionalLinesRead; 
                   if (additionalLinesRead)
-		    strcpy(inbuf, previousline); /* update last line read */
+		    strncpy(inbuf,  previousline, sizeof(inbuf));  /* update last line read */
                   ostr<<"\t endif"<<endl;
                 }
 		else
@@ -3763,7 +3763,7 @@ bool instrumentFFile(PDB& pdb, pdbFile* f, string& outfile, string& group_name)
 		    additionalLinesRead = printTauAllocStmt(istr, ostr, inbuf, it, previousline); 
 		    inputLineNo += additionalLinesRead;
                     if (additionalLinesRead)
-                      strcpy(inbuf, previousline); /* update last line read */
+                      strncpy(inbuf,  previousline, sizeof(inbuf));  /* update last line read */
 		  }
 		}	
                 instrumented = true;
@@ -3793,7 +3793,7 @@ bool instrumentFFile(PDB& pdb, pdbFile* f, string& outfile, string& group_name)
                   additionalLinesRead=printTauDeallocStmt(istr, ostr, &inbuf[dealloccol-1], it, true, previousline);
 		  inputLineNo+=additionalLinesRead;
 		  if (additionalLinesRead)
-		    strcpy(inbuf, previousline); /* update last line read */
+		    strncpy(inbuf,  previousline, sizeof(inbuf));  /* update last line read */
 		  /* now the deallocate stmt */
                   ostr<<"\t endif"<<endl;
                 }
@@ -3821,7 +3821,7 @@ bool instrumentFFile(PDB& pdb, pdbFile* f, string& outfile, string& group_name)
                     additionalLinesRead=printTauDeallocStmt(istr, ostr, inbuf, it, false, previousline);
 		    inputLineNo+=additionalLinesRead;
 		    if (additionalLinesRead)
-		      strcpy(inbuf, previousline); /* update last line read */
+		      strncpy(inbuf,  previousline, sizeof(inbuf));  /* update last line read */
 /* 
 		    ostr<<inbuf<<endl;
 */
@@ -3863,7 +3863,7 @@ bool instrumentFFile(PDB& pdb, pdbFile* f, string& outfile, string& group_name)
                   additionalLinesRead=printTauIOStmt(istr, ostr, &inbuf[iocol-1], it, true, previousline);
 		  inputLineNo+=additionalLinesRead;
 		  if (additionalLinesRead)
-		    strcpy(inbuf, previousline); /* update last line read */
+		    strncpy(inbuf,  previousline, sizeof(inbuf));  /* update last line read */
 		  /* now the IO stmt */
                   ostr<<"\t endif"<<endl;
                 }
@@ -3889,7 +3889,7 @@ bool instrumentFFile(PDB& pdb, pdbFile* f, string& outfile, string& group_name)
                     additionalLinesRead=printTauIOStmt(istr, ostr, inbuf, it, false, previousline);
 		    inputLineNo+=additionalLinesRead;
 		    if (additionalLinesRead)
-		      strcpy(inbuf, previousline); /* update last line read */
+		      strncpy(inbuf,  previousline, sizeof(inbuf));  /* update last line read */
                   }
                 }
 #ifdef DEBUG

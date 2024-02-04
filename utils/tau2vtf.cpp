@@ -636,7 +636,7 @@ int main(int argc, char **argv)
 
   /* Define group ids */
   char name[1024];
-  strcpy(name, "TAU sample group name");
+  strncpy(name,  "TAU sample group name", sizeof(name)); 
   VTF3_WriteDefcpugrp(fcb, sampgroupid, totalnidtids, idarray, name);
 
   EndOfTrace = 0;

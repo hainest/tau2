@@ -204,7 +204,7 @@ TAUDB_TRIAL* taudb_query_trials(TAUDB_CONNECTION* connection, boolean full, TAUD
     char *where1 = "where id in (select pm0.trial from primary_metadata pm0 ";
     char *join = "inner join primary_metadata pm%d on pm%d.trial = pm%d.trial";
     char conjunction[128];
-	strcpy(conjunction, where1);
+	strncpy(conjunction,  where1, sizeof(conjunction)); 
 	int index = 1;
 	// are there metadata fields?
     TAUDB_PRIMARY_METADATA * current;

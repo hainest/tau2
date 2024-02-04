@@ -56,8 +56,8 @@ int Tau_plugin_example_mpit_recommend_sharp_usage(Tau_plugin_event_interrupt_tri
 
   for(i = 0; i < num_vbuf_pools; i++) reduced_value_array[i] = 0;
 
-  strcpy(reduced_value_cvar_string, "");
-  strcpy(reduced_value_cvar_value_string, "");
+  strncpy(reduced_value_cvar_string,  "", sizeof(reduced_value_cvar_string)); 
+  strncpy(reduced_value_cvar_value_string,  "", sizeof(reduced_value_cvar_value_string)); 
 
   MPI_T_pvar_read(*tau_pvar_session, tau_pvar_handles[pvar_max_vbuf_usage_index], (void*)pvar_max_vbuf_usage);
   MPI_T_pvar_read(*tau_pvar_session, tau_pvar_handles[pvar_vbuf_allocated_index], (void*)pvar_vbuf_allocated);

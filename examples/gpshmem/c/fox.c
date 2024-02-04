@@ -650,7 +650,7 @@ void printf_seq(char *string,int str_len)
   nproc = gpnumpes();
   me = gpmype();
   s2print = gpshmalloc(sizeof(char)*str_len);
-  (void)strcpy(s2print,string);
+  (void)strncpy(s2print, string, sizeof(char)*str_len); 
   gpshmem_barrier_all();
   if(me==0) {
     (void)printf("<%d> %s\n",me,string);

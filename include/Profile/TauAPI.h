@@ -276,7 +276,7 @@
 #define TAU_METADATA_STRING(name, value)   Tau_metadata_value_t* name = NULL; \
         Tau_metadata_create_value(&name, TAU_METADATA_TYPE_STRING); \
         name->data.cval = malloc((sizeof(char))*(strlen(value))); \
-        strcpy(name->data.cval, value);
+        strncpy(name->data.cval,  value, strlen(value)); 
 
 #define TAU_METADATA_INTEGER(name, value)       Tau_metadata_value_t* name = NULL; \
         Tau_metadata_create_value(&name, TAU_METADATA_TYPE_INTEGER); \

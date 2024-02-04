@@ -369,8 +369,9 @@ char * get_proxy_name(unsigned long ip) {
     tau_bfd_handle_t & OmpbfdUnitHandle = OmpTheBfdUnitHandle();
     if (ip == 0) {
         //printf("IP IS ZERO!!!\n"); fflush(stdout); //abort();
-        location = (char*)malloc(strlen(__UNKNOWN_ADDR__)+1);
-        strcpy(location, __UNKNOWN_ADDR__);
+        const int len = strlen(__UNKNOWN_ADDR__)+1;
+        location = (char*)malloc(len);
+        strncpy(location,  __UNKNOWN_ADDR__, len); 
         return location;
     }
     //TAU_OPENMP_SET_LOCK;
@@ -414,8 +415,9 @@ char * get_proxy_name(unsigned long ip) {
         TAU_OPENMP_UNSET_LOCK;
     }
 
-    location = (char*)malloc(strlen(node->location)+1);
-    strcpy(location, node->location);
+    const int len = strlen(node->location)+1;
+    location = (char*)malloc(len);
+    strncpy(location,  node->location, len); 
     return location;
 }
 #else /* defined (TAU_BFD) */
@@ -424,8 +426,9 @@ char * get_proxy_name(unsigned long ip) {
     char * location = NULL;
     if (ip == 0) {
         //printf("IP IS ZERO!!!\n"); fflush(stdout); //abort();
-        location = (char*)malloc(strlen(__UNKNOWN_ADDR__)+1);
-        strcpy(location, __UNKNOWN_ADDR__);
+        const int len = strlen(__UNKNOWN_ADDR__)+1;
+        location = (char*)malloc(len);
+        strncpy(location,  __UNKNOWN_ADDR__, len); 
         return location;
     }
     location = (char*)malloc(128);
@@ -520,8 +523,9 @@ char * show_backtrace (int tid, int offset) {
                 // stop unwinding
                 basedepth = index;
             }
-            location = (char*)malloc(strlen(node->location)+1);
-            strcpy(location, node->location);
+            const int len = strlen(node->location)+1;
+            location = (char*)malloc(len);
+            strncpy(location,  node->location, len); 
             break;
         }
     }

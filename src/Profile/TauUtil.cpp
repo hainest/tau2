@@ -444,7 +444,7 @@ int Tau_util_parse_plugin_token(char * token, char ** plugin_name, char *** plug
   pos_right = strchr(token, ')');
 
   if(pos_left == NULL && pos_right == NULL) {
-    strcpy(*plugin_name, token);
+    strncpy(*plugin_name,  token, 1024); 
     return 0;
   } else if (pos_left == NULL || pos_right == NULL) {
     return -1; //Bad plugin name
@@ -467,7 +467,7 @@ int Tau_util_parse_plugin_token(char * token, char ** plugin_name, char *** plug
   while(arg_token != NULL) {
     (*plugin_num_args)++;
     (*plugin_args)[i] = (char*)calloc(1024,sizeof(char));
-    strcpy((*plugin_args)[i], arg_token);
+    strncpy((*plugin_args)[i],  arg_token, 1024); 
     arg_token = strtok_r(NULL, ",", &save_ptr);
     i++;
   }

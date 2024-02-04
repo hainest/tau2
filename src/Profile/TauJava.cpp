@@ -116,8 +116,9 @@ void TauJavaLayer::Init(char *options) {
     // There are problems with strtok. Since this is called twice,
     // we allocate new strings before using with strtok. Crashes otherwise 	
     if (num_tokens == 0) {
-      s1 = new char [strlen (options) + 1];
-      strcpy(s1, options);
+      const int len = strlen (options) + 1;
+      s1 = new char [len];
+      strncpy(s1,  options, len); 
       token=strtok(s1, "=,");
     } else {
       s2 = new char [strlen (options) + 1];
@@ -137,7 +138,7 @@ void TauJavaLayer::Init(char *options) {
       while(token=strtok(NULL,"=,")) {
 	token_len = strlen(token);
 	TauExcludeList[num_tokens]=(char *)malloc(token_len+1);
-	strcpy(TauExcludeList[num_tokens], token);
+	strncpy(TauExcludeList[num_tokens],  token, token_len+1); 
         num_tokens++;
       }
       TauExcludeListSize = num_tokens;

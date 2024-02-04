@@ -133,8 +133,9 @@ int main(int argc, char **argv)
 
     profiledir = getenv("PROFILEDIR");
     if (profiledir == NULL) {
-      profiledir = (char *)malloc((strlen(".")+1)*sizeof(char));
-      strcpy(profiledir,".");
+      const int len = (strlen(".")+1)*sizeof(char);
+      profiledir = (char *)malloc(len);
+      strncpy(profiledir, ".", len); 
     }
 
     char* topology_file = argv[1];

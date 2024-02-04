@@ -301,15 +301,17 @@ void taudb_parse_tau_profile_function(char* line, TAUDB_TRIAL* trial, TAUDB_METR
   printf("taudb_parse_tau_profile_function: %s\n", line);
 #endif
   // it won't be this long, but it will be close.
-  char* timer_name = calloc(strlen(line), sizeof(char));
+  const int line_len = strlen(line);
+  char* timer_name = calloc(line_len, sizeof(char));
   // likewise, the groups
-  char* groups = calloc(strlen(line), sizeof(char));
+  const int line_len = strlen(line);
+  char* groups = calloc(line_len, sizeof(char));
   int calls = 0, subroutines = 0;
   double inclusive = 0.0, exclusive = 0.0, stddev = 0.0;
   // tokenize by quotes first, to get the function name
   char* tmp = strtok(line, "\"");
   if (tmp != NULL && (strlen(tmp) > 0)) {
-    strcpy(timer_name, tmp);
+    strncpy(timer_name,  tmp, line_len); 
 	// as much as I would love to trim the timer names, I can't. :(
 	// it causes downstream problems.
 	//taudb_trim(timer_name);
@@ -338,7 +340,7 @@ void taudb_parse_tau_profile_function(char* line, TAUDB_TRIAL* trial, TAUDB_METR
   tmp = strtok(NULL, "=");
   tmp = strtok(NULL, "\"");
   if (tmp != NULL && (strlen(tmp) > 0)) {
-    strcpy(groups, tmp);
+    strncpy(groups,  tmp, line_len); 
   }
   
   const char* conjunction = " => ";
@@ -695,13 +697,14 @@ void taudb_parse_tau_profile_counter(char* line, TAUDB_TRIAL* trial,  TAUDB_THRE
   printf("taudb_parse_tau_profile_counter: %s\n", line);
 #endif
   // it won't be this long, but it will be close.
-  char* counter_name = calloc(strlen(line), sizeof(char));
+  const int line_len = strlen(line);
+  char* counter_name = calloc(line_len, sizeof(char));
   int numevents = 0;
   double max = 0.0, min = 0.0, mean = 0.0, sumsqr = 0.0;
   // tokenize by quotes first, to get the function name
   char* tmp = strtok(line, "\"");
   if (tmp != NULL && (strlen(tmp) > 0)) {
-    strcpy(counter_name, tmp);
+    strncpy(counter_name,  tmp, line_len); 
 	// as much as I would love to trim the counter names, I can't. :(
 	// it causes downstream problems.
 	//taudb_trim(counter_name);

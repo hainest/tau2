@@ -28,8 +28,9 @@ int main(int argc, char **argv)
   char *outdirName;
   outdirName = getenv("PROFILEDIR");
   if (outdirName == NULL) {
-    outdirName = (char *)malloc((strlen(".")+1)*sizeof(char));
-    strcpy(outdirName,".");
+    const int len = (strlen(".")+1)*sizeof(char);
+    outdirName = (char *)malloc(len);
+    strncpy(outdirName, ".", len); 
   }
   char infileString[512];
   snprintf(infileString, sizeof(infileString), "%s/allhosts.txt",outdirName);

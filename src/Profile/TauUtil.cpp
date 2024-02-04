@@ -568,8 +568,8 @@ int Tau_util_load_and_register_plugins(PluginManager* plugin_manager)
     return -1;
   }
 
-  strcpy(pluginpath, TauEnv_get_plugins_path());
-  strcpy(listpluginsnames, TauEnv_get_plugins());
+  strncpy(pluginpath,  TauEnv_get_plugins_path(), sizeof(pluginpath)); 
+  strncpy(listpluginsnames,  TauEnv_get_plugins(), sizeof(listpluginsnames)); 
 
   /*Individual plugin names are separated by a ":"*/
   token = strtok_r(listpluginsnames,":", &save_ptr);

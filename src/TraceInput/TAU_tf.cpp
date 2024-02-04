@@ -826,7 +826,7 @@ int refreshTables(Ttf_fileT *tFile, Ttf_CallbacksT cb)
       eventname[k-j+1] = '"';
       eventname[k-j+2] = '\0'; /* terminate eventname */
 
-      strcpy(param, &linebuf[k+2]);
+      strncpy(param,  &linebuf[k+2], sizeof(param)); 
 
       // Fix 13/10 to 10 for event files generated with windows
       if (param[strlen(param)-2] == 13) {

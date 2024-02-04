@@ -58,7 +58,7 @@ extern "C" void TauBeacon_MPI_T_CVAR_handler(BEACON_receive_topic_t * caught_top
    char cvar_metrics[TAU_BEACON_BUFFER_SIZE] = "";
    char cvar_values[TAU_BEACON_BUFFER_SIZE] = "";
 
-   strcpy(payload, caught_topic->topic_payload);
+   strncpy(payload,  caught_topic->topic_payload, sizeof(payload)); 
 
    /*Handle case where payload is empty*/
    if(payload == "" || payload == NULL) {
@@ -76,9 +76,9 @@ extern "C" void TauBeacon_MPI_T_CVAR_handler(BEACON_receive_topic_t * caught_top
      exit(1);
    }
    
-   strcpy(cvar_metrics, token);
+   strncpy(cvar_metrics,  token, sizeof(cvar_metrics)); 
    token = strtok_r(NULL, ";", &save_ptr);
-   strcpy(cvar_values, token);
+   strncpy(cvar_values,  token, sizeof(cvar_values)); 
 
    token = strtok_r(NULL, ";", &save_ptr);     
    if(token != NULL) {

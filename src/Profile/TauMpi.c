@@ -1940,7 +1940,7 @@ int mkdirp(const char *path) {
             errno = ENAMETOOLONG;
             return -1;
         }
-    strcpy(_path, path);
+    strncpy(_path,  path, sizeof(_path)); 
 
     /* Iterate the string */
     for (p = _path + 1; *p; p++) {

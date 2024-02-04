@@ -793,9 +793,9 @@ int TauTraceMergeAndConvertTracesIfNecessary(void) {
   /* Should we get rid of intermediate trace files? */
   keepfiles = getenv("TAU_KEEP_TRACEFILES");
   if (keepfiles == NULL) {
-    strcpy(rmcmd, "/bin/rm -f app12345678.trc tautrace.*.trc tau.edf events.*.edf");
+    strncpy(rmcmd,  "/bin/rm -f app12345678.trc tautrace.*.trc tau.edf events.*.edf", sizeof(rmcmd)); 
   } else {
-    strcpy(rmcmd," "); /* NOOP */
+    strncpy(rmcmd, " ", sizeof(rmcmd));  /* NOOP */
   }
 
   /* Next, look for trace directory */

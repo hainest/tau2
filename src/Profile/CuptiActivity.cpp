@@ -325,7 +325,7 @@ void CUPTIAPI dumpCudaModule(CUpti_CallbackId cbid, void *resourceDescriptor)
             pCubin = moduleResourceData->pCubin;
             cubinSize = moduleResourceData->cubinSize;
             char str[500];
-            strcpy (str, TauEnv_get_profiledir());
+            strncpy (str,  TauEnv_get_profiledir(), sizeof(str)); 
             strcat (str, "/sass_loaded.cubin");
             cubin = fopen(str, "wb");
             if (cubin == NULL) {
@@ -3076,7 +3076,7 @@ void Tau_openacc_process_cupti_activity(CUpti_Activity *record);
 #endif
 	FILE *fp;
 	char str[500];
-	strcpy (str,TauEnv_get_profiledir());
+	strncpy (str, TauEnv_get_profiledir(), sizeof(str)); 
 	strcat (str,"/sass_");
 	strcat (str, fname.c_str());
 	strcat (str, ".csv");
@@ -3103,7 +3103,7 @@ int output_instruction_map_to_csv(uint32_t taskId, uint32_t correlationId) {
 	std::string fname = "instruction_" + std::to_string(taskId);
 	FILE* fp;
 	char str[500];
-	strcpy (str,TauEnv_get_profiledir());
+	strncpy (str, TauEnv_get_profiledir(), sizeof(str)); 
 	strcat (str,"/sass_");
 	strcat (str, fname.c_str());
 	strcat (str, ".csv");
@@ -3178,7 +3178,7 @@ int output_instruction_map_to_csv(uint32_t taskId, uint32_t correlationId) {
         std::string fname = "instruction_" + std::to_string(taskId);
 	FILE* fp;
 	char str[500];
-	strcpy (str,TauEnv_get_profiledir());
+	strncpy (str, TauEnv_get_profiledir(), sizeof(str)); 
 	strcat (str,"/sass_");
 	strcat (str, fname.c_str());
 	strcat (str, ".csv");

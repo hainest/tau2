@@ -247,8 +247,9 @@ int parse_edf_file(int node)
 #endif /* DEBUG */
       /* now that we have eventname, see if it exists in the map */
       /* Since pointers create a problem with stl we have to do this */
-      stlEvName = new char[strlen(eventname)+1];
-      strcpy(stlEvName, eventname);
+      const int len = strlen(eventname)+1;
+      stlEvName = new char[len];
+      strncpy(stlEvName,  eventname, len); 
       if((iter = eventNameMap.find((const char *)stlEvName)) != eventNameMap.end()) 
       {
 	/* Found eventname in the map */

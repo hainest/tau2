@@ -1029,7 +1029,7 @@ int main(int argc, char *argv[])
     const int len = (strlen(argv[argc-1])+5) * sizeof(char);
     trcfile = (char *) malloc (len);
     if ( strcmp ((argv[argc-1])+strlen(argv[argc-1])-4, ".trc") == 0 )
-      strcpy (trcfile, argv[argc-1]);
+      strncpy (trcfile,  argv[argc-1], len); 
     else
       snprintf (trcfile, len,  "%s.trc", argv[argc-1]);
 

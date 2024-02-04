@@ -189,8 +189,9 @@ int main (int argc, char *argv[]) {
   // generate opari resource file if necessary
   if ( !rcfile ) {
     rcfile = "opari.rc";
-    rcdir = (char*)(calloc((strlen(".")+1), sizeof(char)));
-	strcpy(rcdir, ".");
+    const int len = strlen(".")+1;
+    rcdir = (char*)(calloc(len, sizeof(char)));
+	strncpy(rcdir,  ".", len); 
   } else {
     const char* sep = strrchr(rcfile, '/');
     if ( sep ) {
@@ -199,8 +200,9 @@ int main (int argc, char *argv[]) {
       strncpy(rcdir, rcfile, dirlen);
       rcdir[dirlen] = '\0';
     } else {
-      rcdir = (char*)(calloc((strlen(".")+1), sizeof(char)));
-	  strcpy(rcdir, ".");
+      const int len = strlen(".")+1;
+      rcdir = (char*)(calloc(len, sizeof(char)));
+	  strncpy(rcdir,  ".", len); 
     }
   }
 

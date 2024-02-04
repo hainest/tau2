@@ -562,8 +562,9 @@ int FillFunctionDB(int node, int ctx, int thr, char *prefix){
     cout << "func = "<< func << endl;
     cout << "numcalls = "<< numcalls << " numsubrs = "<< numsubrs << " excl = "<< excl <<" incl = " << incl << " no profiled invocations " << numinvocations << endl;
 #endif /* DEBUG */
-    functionName = new char[strlen(func)+1]; // create a new storage - STL req.
-    strcpy(functionName,func);
+    const int len = strlen(func)+1;
+    functionName = new char[len]; // create a new storage - STL req.
+    strncpy(functionName, func, len); 
     if ((it = funcDB.find((const char *)functionName)) != funcDB.end()) {
 #ifdef DEBUG
       cout << "Found the name " << functionName << endl;
@@ -578,8 +579,9 @@ int FillFunctionDB(int node, int ctx, int thr, char *prefix){
       //Just added functionName, therefore it will be there.
       //Set the group names for this function.
       if(groupNamesUsed){
-        char *createdGNSpace = new char[strlen(groupNames)+1];
-        strcpy(createdGNSpace, groupNames);
+        const int len = strlen(groupNames)+1;
+        char *createdGNSpace = new char[len];
+        strncpy(createdGNSpace,  groupNames, len); 
         funcDB[functionName].groupNames = createdGNSpace;
       }//if
     }//else
@@ -644,8 +646,9 @@ int FillFunctionDB(int node, int ctx, int thr, char *prefix){
 #endif /* OLDCODE */
 	  // At this point line[j] is '"' and the has a blank after that, so
 	  // line[j+1] corresponds to the beginning of other data.
-	  userEventName = new char[strlen(func)+1]; // create a new storage - STL req.
-	  strcpy(userEventName,func);
+	  const int len = strlen(func)+1;
+	  userEventName = new char[len]; // create a new storage - STL req.
+	  strncpy(userEventName, func, len); 
 	  if ((uit = userEventDB.find((const char *)userEventName)) != userEventDB.end()) {
 #ifdef DEBUG
 	    cout << "FOUND the name " << userEventName << endl;
@@ -1405,11 +1408,12 @@ void UserEventSummaryInfo(int node, int ctx, int thr){
 /******************** pC++ /HPC++ profiling code **************************/
 static char *strsave (const char *s){
   char *r;
-  if ( (r = (char *) malloc (strlen(s)+1)) == NULL ) {
+  const int len = strlen(s)+1;
+  if ( (r = (char *) malloc (len)) == NULL ) {
     fprintf (stderr, "error: no more memory\n");
     exit (1);
   }//if
-  strcpy (r, s);
+  strncpy (r,  s, len); 
   return r;
 }//strsave()
 

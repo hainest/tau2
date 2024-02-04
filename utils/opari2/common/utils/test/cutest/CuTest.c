@@ -30,7 +30,7 @@ CuStrCopy( const char* old )
 {
     int   len    = strlen( old );
     char* newStr = CuStrAlloc( len + 1 );
-    strcpy( newStr, old );
+    strncpy( newStr,  old , len + 1); 
     return newStr;
 }
 

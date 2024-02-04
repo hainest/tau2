@@ -235,7 +235,7 @@ int main(int argc, char **argv)
           const int len = 9;
           data_directory = (char *) malloc(len);
           if (lt == -1)
-            strcpy(data_directory, "00000000");
+            strncpy(data_directory,  "00000000", len); 
           else
           {
             broken_down_time = localtime(&lt);

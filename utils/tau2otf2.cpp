@@ -223,7 +223,7 @@ char* tau_strdup(const char* in_string) {
     // add one more character for the null terminator
     int length = strlen(in_string) + 1;
     char* new_string = (char*)calloc(length, sizeof(char));
-    strcpy(new_string, in_string);
+    strncpy(new_string,  in_string, length); 
     return new_string;
 }
 
